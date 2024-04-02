@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import Footer from '../Components/Footer';
 
 const DirectorLogin = () => {
     const [username, setUsername] = useState('');
@@ -86,6 +87,7 @@ const DirectorLogin = () => {
                     </div>
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 };
