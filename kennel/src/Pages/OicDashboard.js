@@ -1,17 +1,17 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import {  useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import Footer from '../Components/Footer';
 
 const OicDashboard = () => {
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleGenerateDailyReport = () => {
-    navigate('/OicGenerateDailyReport');
+    navigate('/Pages/OicGenerateDailyReport');
   };
 
   const handleGenerateSummary = () => {
-    navigate('/OicGenerateSummary');
+    navigate('/Pages/OicGenerateSummary');
   };
 
   return (

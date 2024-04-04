@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../Components/Footer';
 
 const DirectorDashboard = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const DirectorDashboard = () => {
           </Button>
         </div>
       </div>
+      <Footer />
     </div>  
   );
 };

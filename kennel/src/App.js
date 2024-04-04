@@ -66,7 +66,8 @@ const App = () => {
                 <Route path="/Pages/HandlerCredentialsTable" element={<HandlerCredentialsTable />}/>
                 <Route path="/Pages/DeputyVetCredentialsTable" element={<DeputyVetCredentialsTable/>}/>
                 <Route path="/Pages/OicCredentialsTable" element={<OicCredentialsTable />}/>
-               <Route path="/Pages/DirectorCredentialsTable" element={<DirectorCredentialsTable />} />
+                <Route path="/Pages/DirectorCredentialsTable" element={<DirectorCredentialsTable />} />
+                <Route path="/Pages/OicGenerateDailyReport" element={<OicGenerateDailyReport/>}/>
                 
 
                  

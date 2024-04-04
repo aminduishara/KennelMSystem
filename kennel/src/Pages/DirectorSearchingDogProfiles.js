@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../App.css';
+import Footer from '../Components/Footer';
 
 const DirectorSearingDogProfiles = () => {
     const navigate = useNavigate(); // Initialize useNavigate hook
@@ -75,6 +76,7 @@ const DirectorSearingDogProfiles = () => {
                     </ListGroup>
                 )}
             </div>
+            <Footer/>
         </div>
     );
 };

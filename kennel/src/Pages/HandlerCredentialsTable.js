@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
+import Footer from '../Components/Footer';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
@@ -125,6 +126,7 @@ const HandlerCredentialsTable = () => {
           </tr>
         </tbody>
       </Table>
+      <Footer/>
     </div>
   );
 };

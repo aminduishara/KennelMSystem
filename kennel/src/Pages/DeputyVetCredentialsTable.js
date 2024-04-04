@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
+import Footer from '../Components/Footer';
 
 const DeputyVetCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
@@ -126,6 +127,7 @@ const DeputyVetCredentialsTable = () => {
           </tr>
         </tbody>
       </Table>
+      <Footer/>
     </div>
   );
 };

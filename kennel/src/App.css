@@ -50,3 +50,13 @@ html {
     font-size: 1rem; /* Match the font size with the Edit button */
     padding: 0.375rem 0.75rem; /* Match the padding with the Edit button */
 }
+.custom-edit-btn-handlerCredentialTable{
+    font-size: 1rem; /* Match the font size with the Delete button */
+    padding: 0.375rem 0.75rem; /* Match the padding with the Delete button */
+}
+
+.daily-report-btn{
+    width: 56%;
+    height: 60px;
+    
+}
