@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button ,Table} from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import DailyReport from '../Components/DailyReport';
  
 
 const OicGenerateDailyReport = () => {
@@ -11,6 +12,18 @@ const OicGenerateDailyReport = () => {
   const [criminalInfo, setCriminalInfo] = useState('');
   const [narcoticInfo, setNarcoticInfo] = useState('');
   const [explosiveInfo, setExplosiveInfo] = useState('');
+
+// Mock data for the daily report
+const mockReportData = {
+sickInfo: [
+      { name: 'Dog 1', regNo: '123', handler: 'Handler 1', breed: 'Breed 1', age: 3, sickName: 'Sick 1', treatments: 'Treatment 1', description: 'Description 1' },
+      { name: 'Dog 2', regNo: '456', handler: 'Handler 2', breed: 'Breed 2', age: 5, sickName: 'Sick 2', treatments: 'Treatment 2', description: 'Description 2' },
+    ],
+deathInfo: [{name: 'Dog 1', regNo: '123', handler: 'Handler 1', generalReason: 'General Reason 1', description: 'Description 1'} ],
+criminalInfo: [],
+drugInfo: [],
+explosiveInfo: [],
+};  
 
   // Function to fetch data from the database (replace with actual API call)
   const fetchData = () => {
@@ -65,11 +78,13 @@ const OicGenerateDailyReport = () => {
         </div>
         <div className="col-md-8">
           {/* Template to display daily report */}
-          <h3>Generate Daily Report </h3>
-          <div className="border p-3">{templateData}</div>
+          <h3>Daily Report Template</h3>
+          <div className="border p-3">
+            <DailyReport reportData={mockReportData} /> {/*call DailyReport component */}
+          </div>
         </div>
       </div>
-      <Footer className="daily-report-footer" />
+      <Footer />
     </div>
   );
 };
