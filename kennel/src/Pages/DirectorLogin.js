@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import Footer from '../Components/Footer';
 
 const DirectorLogin = () => {
@@ -9,7 +9,6 @@ const DirectorLogin = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Extract role from URL query string
     const role = new URLSearchParams(location.search).get('role');
 
     const handleUsernameChange = (event) => {
@@ -26,19 +25,16 @@ const DirectorLogin = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        // Add authentication logic here if needed
+
+        console.log('Logging in...');
         console.log('Username:', username);
         console.log('Password:', password);
         console.log('Remember Me:', rememberMe);
 
-        switch (role) {
-            case 'Director':
-                console.log('Navigating to DirectorDashboard');
-                navigate('/Pages/DirectorDashboard');
-                break;
-            default:
-                console.log('Navigating to default route');
-                navigate('/'); // Redirect to the home page if the role is not recognized
-        }
+        // Simulating a successful login and navigating to DirectorDashboard
+        console.log('Navigating to DirectorDashboard');
+        navigate('/Pages/DirectorDashboard');
     };
 
     return (
@@ -82,12 +78,15 @@ const DirectorLogin = () => {
                                     <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
                                 </div>
                                 <button type="submit" className="btn btn-primary btn-block">Login</button>
+                                {role === 'Director' && (
+                                    <Link to="/forgotpassword" className="forgot-password-link">Forgot Password?</Link>
+                                )}
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     );
 };

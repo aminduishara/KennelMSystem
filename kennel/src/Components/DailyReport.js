@@ -2,16 +2,13 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 
 const DailyReport = ({ reportData }) => {
-   
-
-
-
-  return (
+   return (
     <div className="daily-report">
-      <p>DIR/PO</p>
+      <p>Index:DIR/PO/PW</p>
       <p>Director</p>
-      <p>Kandy Kennels</p>
-      <p>Date: {new Date().toLocaleDateString()}</p> {/* Display current date */}
+      <p>Kandy Kennels Devision</p>
+        <p>Asgiriya</p>
+      <p>{new Date().toLocaleDateString()} [ 6.00 am to 6.00 am within 24 hours]</p> {/* Display current date */}
 
       <h4>Sick Dog Information</h4>
       <Table striped bordered hover>
@@ -147,7 +144,14 @@ const DailyReport = ({ reportData }) => {
               <td>{info.description}</td>
             </tr>
           ))}
-        </tbody>
+        </tbody><br/>
+        <p>Checked by</p>
+        <p>L.K Wijayabandara</p><br/>
+        <br/>
+        <br/>
+        <p>Director,</p>
+        <p>Kandy Kennels Devision,</p>
+        <p>Asgiriya</p>
       </Table>
     </div>
   );

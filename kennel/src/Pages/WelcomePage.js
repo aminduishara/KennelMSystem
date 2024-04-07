@@ -8,14 +8,18 @@ const WelcomePage = () => {
     const navigate = useNavigate(); // Initialize the navigate function
 
     const handleRoleSelection = (role) => {
-        navigate(`/Pages/${role}Login?role=${role}`);
+        if (role === 'Director') {
+            navigate(`/Pages/DirectorLogin?role=${role}`);
+        } else {
+            navigate(`/Pages/${role}Login?role=${role}`);
+        }
     };
 
     return (
         <div className="d-flex flex-column min-vh-100">
             <Container className="mt-5 flex-grow-1">
                 <h1 className="text-center">Welcome to Kandy Kennels</h1>
-                <p className="text-center">Please choose your role:</p>
+                <p className="text-center">Select your role:</p>
                 <Row className="justify-content-center">
                     <Col xs={6} md={3} className="mb-4">
                         <Button variant="primary" size="lg" block className="square-button" onClick={() => handleRoleSelection('Handler')}>Handler</Button>

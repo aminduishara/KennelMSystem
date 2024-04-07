@@ -40,10 +40,12 @@ const App = () => {
             <Routes>
                 {/*call Welcome page in App.js as a component*/}
                 <Route path="/" element={<WelcomePage />} />
+                <Route path="/Pages/DirectorLogin" element={<DirectorLogin />} />
+                <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
                 <Route path="/Pages/HandlerLogin" element={<HandlerVetOICLogin name={"Handler Login"}/>} />
                 <Route path="/Pages/DeputyVetLogin" element={<HandlerVetOICLogin name={"Deputy Veterinary Login"}/>} />
                 <Route path="/Pages/OICLogin" element={<HandlerVetOICLogin name={"OIC Login"}/>} />
-                <Route path="/Pages/DirectorLogin" element={<DirectorLogin />} />
+              
                 <Route path="/Pages/DogAccountCreate" element={<DogAccountCreate/>}/>
               
                 <Route path="/Pages/DogProfile" element={<DogProfile />} /> 

@@ -55,37 +55,44 @@ explosiveInfo: [],
   }, []);
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-4">
+    <div className="container-fluid mt-4">
+      <div className="row align-items-center justify-content-center">
+        <div className="col-md-12 text-center">
           {/* Buttons to fetch and display data */}
-         
-          <div className="mb-3">
-            <Button block className=' daily-report-btn'onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className='daily-report-btn' block onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
-          </div>
-        </div>
-        <div className="col-md-8">
-          {/* Template to display daily report */}
-          <h3>Daily Report Template</h3>
-          <div className="border p-3">
-            <DailyReport reportData={mockReportData} /> {/*call DailyReport component */}
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
           </div>
         </div>
       </div>
-      <Footer />
-    </div>
+      <div className="row mt-3">
+
+        <div className="col-md-12" >
+          {/* Template to display daily report */}
+          <h3>Daily Report Template</h3>
+          <div className="border p-3 daily-report-wrapper" >
+            <DailyReport reportData={mockReportData} />
+          </div>
+        </div>
+        </div>
+        <Footer />
+      </div>
+   
+    
+      
+  
+    
   );
 };
 
