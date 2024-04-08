@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button ,Table} from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import Footer from '../Components/Footer';
 import DailyReport from '../Components/DailyReport';
  

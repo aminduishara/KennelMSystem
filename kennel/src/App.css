@@ -39,6 +39,10 @@ html {
     position: fixed;
     bottom: 0;
     left: 0;
+    /* margin-inline-start: 25px; */
+    /* padding-top: 0 ; */
+    /* margin-bottom: px; */
+    margin-top: 25px;
 }
 
 /* Adjustments for the logout button */
@@ -59,4 +63,23 @@ html {
     width: 60%;
     height: 60px;
     
+}
+
+.details{
+    /* padding-bottom: 25px; */
+    /* background-color: red; */
+    margin-bottom: 35px;
+    /* margin-left: 25px; */
+    padding-bottom: 25px;
+}
+
+.formRow{
+    margin-bottom: 35px;
+    /* margin-left: 25px; */
+    padding-bottom: 25px;   
+}
+
+.custom-clear-btn-directorRegister{
+    margin-left: 400px;
+   
 }

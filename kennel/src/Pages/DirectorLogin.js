@@ -77,7 +77,7 @@ const DirectorLogin = () => {
                                     />
                                     <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">Login</button>
+                                <button type="submit" className="btn btn-primary btn-block">Login</button><br/>
                                 {role === 'Director' && (
                                     <Link to="/forgotpassword" className="forgot-password-link">Forgot Password?</Link>
                                 )}

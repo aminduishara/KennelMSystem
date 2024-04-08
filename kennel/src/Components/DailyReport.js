@@ -145,14 +145,19 @@ const DailyReport = ({ reportData }) => {
             </tr>
           ))}
         </tbody><br/>
-        <p>Checked by</p>
+        
+      </Table>
+
+      
+      <div className='details'>
+      <p>Checked by</p>
         <p>L.K Wijayabandara</p><br/>
         <br/>
         <br/>
         <p>Director,</p>
         <p>Kandy Kennels Devision,</p>
         <p>Asgiriya</p>
-      </Table>
+      </div>
     </div>
   );
 };

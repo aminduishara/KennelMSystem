@@ -9,7 +9,8 @@ const WelcomePage = () => {
 
     const handleRoleSelection = (role) => {
         if (role === 'Director') {
-            navigate(`/Pages/DirectorLogin?role=${role}`);
+            // navigate(`/Pages/DirectorLogin?role=${role}`);
+            navigate('/Pages/DirectorRegister');
         } else {
             navigate(`/Pages/${role}Login?role=${role}`);
         }

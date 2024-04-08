@@ -14,5 +14,8 @@ app.use(cors());
 // Start server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+    console.log('noddeman check');
+    console.log('noddeman check');
+    console.log('noddeman check');
    
 });
