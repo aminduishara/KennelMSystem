@@ -9,8 +9,7 @@ const DirectorLogin = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const role = new URLSearchParams(location.search).get('role');
-
+    
     const handleUsernameChange = (event) => {
         setUsername(event.target.value);
     };
@@ -78,9 +77,9 @@ const DirectorLogin = () => {
                                     <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
                                 </div>
                                 <button type="submit" className="btn btn-primary btn-block">Login</button><br/>
-                                {role === 'Director' && (
+                                
                                     <Link to="/forgotpassword" className="forgot-password-link">Forgot Password?</Link>
-                                )}
+                                
                             </form>
                         </div>
                     </div>

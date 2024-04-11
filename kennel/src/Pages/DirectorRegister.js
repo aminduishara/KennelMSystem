@@ -52,6 +52,7 @@ const DirectorRegister = () => {
         // Simulating a successful registration and navigating to DirectorDashboard
         console.log('Director registered successfully!');
         navigate('/Pages/DirectorLogin');
+        
     };
 
     return (
@@ -108,7 +109,7 @@ const DirectorRegister = () => {
                             />
                         </Form.Group>
 
-                        <Button variant="primary" type="submit" className="mr-2">
+                        <Button variant="primary" type="submit" className="mr-2" >
                             Register
                         </Button>
                         <Button variant="secondary" onClick={handleClearForm} className='custom-clear-btn-directorRegister'>

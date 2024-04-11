@@ -51,7 +51,7 @@ const App = () => {
                 <Route path="/Pages/OICLogin" element={<HandlerVetOICLogin name={"OIC Login"}/>} />
                 <Route path="/Pages/DirectorRegister" element ={<DirectorRegister/>}/>
                 <Route path="/Pages/DirectorLogin" element={<DirectorLogin/>}/>
-                {/* <Route path="/Pages/DirectorLogin" element={<DirectorLogin/>}/> */}
+              
                 
               
                 <Route path="/Pages/DogAccountCreate" element={<DogAccountCreate/>}/>
