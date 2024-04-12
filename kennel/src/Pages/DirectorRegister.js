@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import Footer from '../Components/Footer';
 import '../App.css';
+import axios from 'axios';
+ 
 
 const DirectorRegister = () => {
     const [username, setUsername] = useState('');
@@ -34,13 +36,31 @@ const DirectorRegister = () => {
         setEmail('');
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
         event.preventDefault();
         // Check if passwords match before submitting the form
         if (password !== repeatPassword) {
             alert('Passwords do not match!');
             return;
         }
+        const formData = {
+            username,
+            password,
+            email
+        };
+        
+        try {
+            // Make a POST request to your backend API
+            const response = await axios.post('http://localhost:5000/kennel_new', formData);
+    
+            console.log('Director registered successfully:', response.data);
+            // Redirect or navigate to DirectorDashboard upon successful registration
+            navigate('/Pages/DirectorLogin');
+        }catch (error) {
+            console.error('Error registering Director:', error);
+            // Handle error cases, such as displaying an error message to the user
+        }
+        
 
         // Add registration logic here if needed
 

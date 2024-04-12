@@ -28,7 +28,8 @@ import DeputyVetCredentialsTable from './Pages/DeputyVetCredentialsTable';
 import OicCredentialsTable from './Pages/OicCredentialsTable';
 import DirectorCredentialsTable from './Pages/DirectorCredentialsTable';
 import OicGenerateDailyReport from './Pages/OicGenerateDailyReport';
-import OicGenerateSummary from './Pages/OicGenerateSummary';    
+import OicGenerateSummary from './Pages/OicGenerateSummary';  
+
 
 
 //app routes paths 
@@ -43,6 +44,8 @@ const App = () => {
             <Routes>
                 {/*call Welcome page in App.js as a component*/}
                 <Route path="/" element={<WelcomePage />} />
+                
+              
                
                
                 <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
