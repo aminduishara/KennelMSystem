@@ -62,12 +62,7 @@ const DirectorRegister = () => {
         }
         
 
-        // Add registration logic here if needed
-
-        console.log('Registering Director...');
-        console.log('Username:', username);
-        console.log('Password:', password);
-        console.log('Email:', email);
+        
 
         // Simulating a successful registration and navigating to DirectorDashboard
         console.log('Director registered successfully!');

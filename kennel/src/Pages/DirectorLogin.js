@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import {  MDBInput, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
+import {  MDBInput, MDBCheckbox} from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
-
+import axios from 'axios';
 const DirectorLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -25,19 +25,37 @@ const DirectorLogin = () => {
     navigate('/Pages/DirectorRegister');
   };
 
-  const handleSubmit = (event) => {
+  //handle login fuction
+  const handleLoginSubmit = async(event) => {
     event.preventDefault();
-    // Implement your login logic here
-    console.log('Username:', username);
-    console.log('Password:', password);
-    console.log('Remember Me:', rememberMe);
+   
+    try {
+      const response = await axios.post('http://localhost:5000/directorregister', {
+        username,
+        password,
+      });
+
+      // Check if the login was successful based on the response from the server
+      if (response.data.success) {
+        console.log('Login successful');
+        // Navigate to DirectorDashboard upon successful login
+        navigate('/Pages/DirectorDashboard');
+      } else {
+        console.log('Login failed');
+        alert('Login failed. Please check your username and password.');
+        // Handle unsuccessful login, such as displaying an error message to the user
+      }
+    } catch (error) {
+      console.error('Error logging in Director:', error);
+      // Handle error cases, such as displaying an error message to the user
+    }
   };
 
   return (
     <div className='login-cont'>
       <h2 className='text-center'>Director Login</h2>
       <div className="login-box container border rounded p-4">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleLoginSubmit}>
           <MDBInput
             wrapperClass='mb-4 col-6' // adjust the width of the input field here
             label='Username'
@@ -77,9 +95,7 @@ const DirectorLogin = () => {
         </form>
 
         <div className="text-center">
-          <p>First time Login? <span onClick={handleRegisterClick} style={{ fontWeight: 'bold',
-      color: 'blue',
-      cursor: 'pointer',}}>Register here</span></p>
+          <p>First time Login? <span onClick={handleRegisterClick} style={{ fontWeight: 'bold',color: 'blue',cursor: 'pointer',}}>Register here</span></p>
         </div>
       </div>
       <Footer />
