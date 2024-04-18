@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import {  MDBInput, MDBCheckbox} from 'mdb-react-ui-kit';
+import { MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import axios from 'axios';
+import LoginFailedModal from '../Components/LoginFailedModal';
+
 const DirectorLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
@@ -21,33 +24,33 @@ const DirectorLogin = () => {
     setRememberMe(!rememberMe);
   };
 
-  const handleRegisterClick = (event) => {
+  const handleRegisterClick = () => {
     navigate('/Pages/DirectorRegister');
   };
 
-  //handle login fuction
-  const handleLoginSubmit = async(event) => {
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleLoginSubmit = async (event) => {
     event.preventDefault();
-   
+
     try {
-      const response = await axios.post('http://localhost:5000/directorregister', {
+      const response = await axios.post('http://localhost:5000/kennel/login', {
         username,
         password,
       });
 
-      // Check if the login was successful based on the response from the server
       if (response.data.success) {
         console.log('Login successful');
-        // Navigate to DirectorDashboard upon successful login
-        navigate('/Pages/DirectorDashboard');
+        navigate('/Pages/DirectorDashboard'); // Navigate on successful login
       } else {
         console.log('Login failed');
-        alert('Login failed. Please check your username and password.');
-        // Handle unsuccessful login, such as displaying an error message to the user
+        setShowModal(true); // Show modal on unsuccessful login
       }
     } catch (error) {
       console.error('Error logging in Director:', error);
-      // Handle error cases, such as displaying an error message to the user
+      setShowModal(true); // Show modal on request error (e.g., 401 Unauthorized)
     }
   };
 
@@ -57,7 +60,7 @@ const DirectorLogin = () => {
       <div className="login-box container border rounded p-4">
         <form onSubmit={handleLoginSubmit}>
           <MDBInput
-            wrapperClass='mb-4 col-6' // adjust the width of the input field here
+            wrapperClass='mb-4 col-6'
             label='Username'
             placeholder='Enter your username'
             id='username'
@@ -68,7 +71,7 @@ const DirectorLogin = () => {
             className="form-control"
           />
           <MDBInput
-            wrapperClass='mb-4 col-6' // adjust the width of the input field here
+            wrapperClass='mb-4 col-6'
             label='Password'
             placeholder='Enter your password'
             id='password'
@@ -95,10 +98,11 @@ const DirectorLogin = () => {
         </form>
 
         <div className="text-center">
-          <p>First time Login? <span onClick={handleRegisterClick} style={{ fontWeight: 'bold',color: 'blue',cursor: 'pointer',}}>Register here</span></p>
+          <p>First time Login? <span onClick={handleRegisterClick} style={{ fontWeight: 'bold', color: 'blue', cursor: 'pointer' }}>Register here</span></p>
         </div>
       </div>
       <Footer />
+      <LoginFailedModal show={showModal} handleClose={handleCloseModal} />
     </div>
   );
 }
