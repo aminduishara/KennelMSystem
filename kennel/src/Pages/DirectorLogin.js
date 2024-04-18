@@ -1,95 +1,110 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
+import axios from 'axios';
+import LoginFailedModal from '../Components/LoginFailedModal';
 
 const DirectorLogin = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
-    // Extract role from URL query string
-    const role = new URLSearchParams(location.search).get('role');
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
 
-    const handleUsernameChange = (event) => {
-        setUsername(event.target.value);
-    };
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
+  const handleRememberMeChange = () => {
+    setRememberMe(!rememberMe);
+  };
 
-    const handleRememberMeChange = () => {
-        setRememberMe(!rememberMe);
-    };
+  const handleRegisterClick = () => {
+    navigate('/Pages/DirectorRegister');
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('Username:', username);
-        console.log('Password:', password);
-        console.log('Remember Me:', rememberMe);
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-        switch (role) {
-            case 'Director':
-                console.log('Navigating to DirectorDashboard');
-                navigate('/Pages/DirectorDashboard');
-                break;
-            default:
-                console.log('Navigating to default route');
-                navigate('/'); // Redirect to the home page if the role is not recognized
-        }
-    };
+  const handleLoginSubmit = async (event) => {
+    event.preventDefault();
 
-    return (
-        <div className="container mt-5">
-            <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-header">
-                            <h2 className="text-center">Director Login</h2>
-                        </div>
-                        <div className="card-body">
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group">
-                                    <label htmlFor="username">Username:</label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        id="username"
-                                        value={username}
-                                        onChange={handleUsernameChange}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label htmlFor="password">Password:</label>
-                                    <input
-                                        type="password"
-                                        className="form-control"
-                                        id="password"
-                                        value={password}
-                                        onChange={handlePasswordChange}
-                                    />
-                                </div>
-                                <div className="form-group form-check">
-                                    <input
-                                        type="checkbox"
-                                        className="form-check-input"
-                                        id="rememberMe"
-                                        checked={rememberMe}
-                                        onChange={handleRememberMeChange}
-                                    />
-                                    <label className="form-check-label" htmlFor="rememberMe">Remember Me</label>
-                                </div>
-                                <button type="submit" className="btn btn-primary btn-block">Login</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <Footer/>
+    try {
+      const response = await axios.post('http://localhost:5000/kennel/login', {
+        username,
+        password,
+      });
+
+      if (response.data.success) {
+        console.log('Login successful');
+        navigate('/Pages/DirectorDashboard'); // Navigate on successful login
+      } else {
+        console.log('Login failed');
+        setShowModal(true); // Show modal on unsuccessful login
+      }
+    } catch (error) {
+      console.error('Error logging in Director:', error);
+      setShowModal(true); // Show modal on request error (e.g., 401 Unauthorized)
+    }
+  };
+
+  return (
+    <div className='login-cont'>
+      <h2 className='text-center'>Director Login</h2>
+      <div className="login-box container border rounded p-4">
+        <form onSubmit={handleLoginSubmit}>
+          <MDBInput
+            wrapperClass='mb-4 col-6'
+            label='Username'
+            placeholder='Enter your username'
+            id='username'
+            type='text'
+            value={username}
+            onChange={handleUsernameChange}
+            required
+            className="form-control"
+          />
+          <MDBInput
+            wrapperClass='mb-4 col-6'
+            label='Password'
+            placeholder='Enter your password'
+            id='password'
+            type='password'
+            value={password}
+            onChange={handlePasswordChange}
+            required
+            className="form-control"
+          />
+
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <MDBCheckbox
+              name='rememberMe'
+              value={rememberMe}
+              id='rememberMe'
+              label='Remember me'
+              onChange={handleRememberMeChange}
+              className="form-check-input"
+            />
+            <a href="!#" className="text-decoration-none text-start">Forgot password?</a>
+          </div>
+
+          <button type="submit" className="btn btn-primary fw-bold">Login</button>
+        </form>
+
+        <div className="text-center">
+          <p>First time Login? <span onClick={handleRegisterClick} style={{ fontWeight: 'bold', color: 'blue', cursor: 'pointer' }}>Register here</span></p>
         </div>
-    );
-};
+      </div>
+      <Footer />
+      <LoginFailedModal show={showModal} handleClose={handleCloseModal} />
+    </div>
+  );
+}
 
 export default DirectorLogin;

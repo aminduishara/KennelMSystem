@@ -1,15 +1,16 @@
+
 const express = require('express');
-const cors = require('cors');//important for access API from different domain
-const db = require('./db');
+const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+
 const port = 5000;
 
 // Middleware
-app.use(express.json());
-app.use(cors());
-
-// Your routes and other server logic go here
+app.use('/kennel', authRoutes);
 
 // Start server
 app.listen(port, () => {

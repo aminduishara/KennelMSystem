@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import WelcomePage from "./Pages/WelcomePage";
 import HandlerVetOICLogin from './Components/HandlerVetOICLogin';
+
+import DirectorRegister from './Pages/DirectorRegister';
 import DirectorLogin from './Pages/DirectorLogin';
+
 
 import DogAccountCreate from './Pages/DogAccountCreate';
 import DogProfile from './Pages/DogProfile';
@@ -25,7 +28,8 @@ import DeputyVetCredentialsTable from './Pages/DeputyVetCredentialsTable';
 import OicCredentialsTable from './Pages/OicCredentialsTable';
 import DirectorCredentialsTable from './Pages/DirectorCredentialsTable';
 import OicGenerateDailyReport from './Pages/OicGenerateDailyReport';
-import OicGenerateSummary from './Pages/OicGenerateSummary';    
+import OicGenerateSummary from './Pages/OicGenerateSummary';  
+
 
 
 //app routes paths 
@@ -40,10 +44,19 @@ const App = () => {
             <Routes>
                 {/*call Welcome page in App.js as a component*/}
                 <Route path="/" element={<WelcomePage />} />
+                
+              
+               
+               
+                <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
                 <Route path="/Pages/HandlerLogin" element={<HandlerVetOICLogin name={"Handler Login"}/>} />
                 <Route path="/Pages/DeputyVetLogin" element={<HandlerVetOICLogin name={"Deputy Veterinary Login"}/>} />
                 <Route path="/Pages/OICLogin" element={<HandlerVetOICLogin name={"OIC Login"}/>} />
-                <Route path="/Pages/DirectorLogin" element={<DirectorLogin />} />
+                <Route path="/Pages/DirectorRegister" element ={<DirectorRegister/>}/>
+                <Route path="/Pages/DirectorLogin" element={<DirectorLogin/>}/>
+              
+                
+              
                 <Route path="/Pages/DogAccountCreate" element={<DogAccountCreate/>}/>
               
                 <Route path="/Pages/DogProfile" element={<DogProfile />} /> 

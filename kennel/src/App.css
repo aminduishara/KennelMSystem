@@ -1,3 +1,12 @@
+
+.form-field {
+    width: 50%;
+  }
+  
+  .forgot-password {
+    margin-left: 10px;
+  }
+
 .btn-outline-secondary:hover {
     color: blue !important; /* Change the color on hover */
 }
@@ -39,6 +48,10 @@ html {
     position: fixed;
     bottom: 0;
     left: 0;
+    /* margin-inline-start: 25px; */
+    /* padding-top: 0 ; */
+    /* margin-bottom: px; */
+    margin-top: 25px;
 }
 
 /* Adjustments for the logout button */
@@ -56,7 +69,26 @@ html {
 }
 
 .daily-report-btn{
-    width: 56%;
+    width: 60%;
     height: 60px;
     
+}
+
+.details{
+    /* padding-bottom: 25px; */
+    /* background-color: red; */
+    margin-bottom: 35px;
+    /* margin-left: 25px; */
+    padding-bottom: 25px;
+}
+
+.formRow{
+    margin-bottom: 35px;
+    /* margin-left: 25px; */
+    padding-bottom: 25px;   
+}
+
+.custom-clear-btn-directorRegister{
+    margin-left: 400px;
+   
 }

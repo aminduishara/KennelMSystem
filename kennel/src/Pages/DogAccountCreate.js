@@ -52,7 +52,7 @@ const DogAccountCreate = () => {
   return (
     
   <div className="container">
-    <div className="row justify-content-center">
+    <div className="formRow row justify-content-center">
     <div className="col-md-6">
       <form onSubmit={handleSubmit} className="form-wrapper mb-20">
     
@@ -130,7 +130,7 @@ const DogAccountCreate = () => {
     </form>
   </div>
 </div>
-{/* <Footer/> */}
+<Footer/>
 </div>
   );
 };

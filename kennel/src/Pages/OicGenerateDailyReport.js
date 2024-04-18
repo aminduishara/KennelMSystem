@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import DailyReport from '../Components/DailyReport';
  
 
 const OicGenerateDailyReport = () => {
@@ -11,6 +12,18 @@ const OicGenerateDailyReport = () => {
   const [criminalInfo, setCriminalInfo] = useState('');
   const [narcoticInfo, setNarcoticInfo] = useState('');
   const [explosiveInfo, setExplosiveInfo] = useState('');
+
+// Mock data for the daily report
+const mockReportData = {
+sickInfo: [
+      { name: 'Dog 1', regNo: '123', handler: 'Handler 1', breed: 'Breed 1', age: 3, sickName: 'Sick 1', treatments: 'Treatment 1', description: 'Description 1' },
+      { name: 'Dog 2', regNo: '456', handler: 'Handler 2', breed: 'Breed 2', age: 5, sickName: 'Sick 2', treatments: 'Treatment 2', description: 'Description 2' },
+    ],
+deathInfo: [{name: 'Dog 1', regNo: '123', handler: 'Handler 1', generalReason: 'General Reason 1', description: 'Description 1'} ],
+criminalInfo: [],
+drugInfo: [],
+explosiveInfo: [],
+};  
 
   // Function to fetch data from the database (replace with actual API call)
   const fetchData = () => {
@@ -42,35 +55,44 @@ const OicGenerateDailyReport = () => {
   }, []);
 
   return (
-    <div className="container mt-5">
-      <div className="row">
-        <div className="col-md-4">
+    <div className="container-fluid mt-4">
+      <div className="row align-items-center justify-content-center">
+        <div className="col-md-12 text-center">
           {/* Buttons to fetch and display data */}
-         
-          <div className="mb-3">
-            <Button block className=' daily-report-btn'onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className='daily-report-btn' block onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
           </div>
-          <div className="mb-3">
-            <Button className=' daily-report-btn' block onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
+          <div className="d-inline-block mx-2">
+            <Button className='daily-report-btn' onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
           </div>
-        </div>
-        <div className="col-md-8">
-          {/* Template to display daily report */}
-          <h3>Generate Daily Report </h3>
-          <div className="border p-3">{templateData}</div>
         </div>
       </div>
-      <Footer className="daily-report-footer" />
-    </div>
+      <div className="row mt-3">
+
+        <div className="col-md-12" >
+          {/* Template to display daily report */}
+          <h3>Daily Report Template</h3>
+          <div className="border p-3 daily-report-wrapper" >
+            <DailyReport reportData={mockReportData} />
+          </div>
+        </div>
+        </div>
+        <Footer />
+      </div>
+   
+    
+      
+  
+    
   );
 };
 
