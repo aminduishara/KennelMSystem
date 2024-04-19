@@ -82,7 +82,7 @@ const DirectorLogin = () => {
             className="form-control"
           />
 
-          <div className="d-flex justify-content-between align-items-center mb-4">
+          <div className="align-items-center mb-4">
             <MDBCheckbox
               name='rememberMe'
               value={rememberMe}
@@ -91,7 +91,7 @@ const DirectorLogin = () => {
               onChange={handleRememberMeChange}
               className="form-check-input"
             />
-            <a href="!#" className="text-decoration-none text-start">Forgot password?</a>
+            <a href="!#" className="text-decoration-none text-start"><br/>Forgot password?</a>
           </div>
 
           <button type="submit" className="btn btn-primary fw-bold">Login</button>

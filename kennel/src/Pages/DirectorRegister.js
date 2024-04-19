@@ -51,7 +51,7 @@ const DirectorRegister = () => {
         
         try {
             // Make a POST request to your backend API
-            const response = await axios.post('http://localhost:5000/kennel_new', formData);
+            const response = await axios.post('http://localhost:5000/kennel/register', formData);
     
             console.log('Director registered successfully:', response.data);
             // Redirect or navigate to DirectorDashboard upon successful registration

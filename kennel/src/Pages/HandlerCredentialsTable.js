@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Dropdown } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from 'axios';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
@@ -55,20 +56,37 @@ const HandlerCredentialsTable = () => {
     }
   };
 
-  const handleAddUser = () => {
-    addCredential(newUsername, newPassword, newHandlerName, newRegistrationNumber, newRank);
-    setNewUsername('');
-    setNewPassword('');
-    setNewHandlerName('');
-    setNewRegistrationNumber('');
-    setNewRank('');
+  const handleAddUser = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/kennel/handler', {
+        username: newUsername,
+        password: newPassword,
+        handlerName: newHandlerName,
+        registrationNumber: newRegistrationNumber,
+        rank: newRank,
+      });
+      console.log(response.data); // Log the response data if needed
+      // Add any additional logic after successful API call
+    } catch (error) {
+      console.error('Error adding user:', error);
+      // Handle error scenario, show error message, etc.
+    }
   };
+
+  // const handleAddUser = () => {
+  //   addCredential(newUsername, newPassword, newHandlerName, newRegistrationNumber, newRank);
+  //   setNewUsername('');
+  //   setNewPassword('');
+  //   setNewHandlerName('');
+  //   setNewRegistrationNumber('');
+  //   setNewRank('');
+  // };
 
   const handleDelete = (id) => {
     deleteCredential(id);
   };
 
-  const rankOptions = ['Rank 1', 'Rank 2', 'Rank 3', 'Rank 4']; // Add your rank options here
+  const rankOptions = ['Constable', 'Sergeant', 'SI']; // Add your rank options here
 
   return (
     <div>
