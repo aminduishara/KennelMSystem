@@ -8,7 +8,7 @@ const LoginFailedModal = ({ show, handleClose }) => {
         <Modal.Title>Login Failed</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Your login attempt was unsuccessful. Please try again.
+        Your login attempt was unsuccessful. Please enter valid credentials.
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
