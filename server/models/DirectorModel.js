@@ -24,11 +24,11 @@ function loginDirector(username, password, callback) {
             return callback(err, null);
         }
         if (result.length > 0) {
-            // Director login successful
+            
             console.log('Director login successful');
             return callback(null, { success: true });
         } else {
-            // Director login failed
+           
             console.log('Director login failed');
             return callback(null, { error: 'Invalid credentials' });
         }

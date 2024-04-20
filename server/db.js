@@ -1,4 +1,4 @@
-// db.js
+// common database connection
 
 const mysql = require('mysql');
 

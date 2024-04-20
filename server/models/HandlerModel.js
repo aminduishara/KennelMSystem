@@ -1,5 +1,4 @@
-// models/HandlerModel.js
-
+//database connection
 const pool = require('../db');
 
 // Function to get all handler credentials

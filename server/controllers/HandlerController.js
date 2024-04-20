@@ -1,4 +1,5 @@
-const HandlerModel = require('../models/HandlerModel');
+//Handler controller to handle all handler related operations
+const HandlerModel = require('../models/HandlerModel'); // Import handler model to use database functions
 
 // Function to get all handler credentials
 exports.getAllHandlers = (req, res) => {
