@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Table, Button, Form, Dropdown } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from 'axios';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
@@ -13,12 +14,24 @@ const HandlerCredentialsTable = () => {
   const [newHandlerName, setNewHandlerName] = useState('');
   const [newRegistrationNumber, setNewRegistrationNumber] = useState('');
   const [newRank, setNewRank] = useState('');
+ //permanent storage of the handler details
+ useEffect(() => {
+  const storedCredentials = JSON.parse(localStorage.getItem('credentials')) || [];
+  setCredentials(storedCredentials);
+}, []);
+
+const updateLocalStorage = (updatedCredentials) => {
+  localStorage.setItem('credentials', JSON.stringify(updatedCredentials));
+};
 
   // Function to add a new credential
   const addCredential = (username, password, handlerName, registrationNumber, rank) => {
     const newId = credentials.length + 1;
     const newCredential = { id: newId, username, password, handlerName, registrationNumber, rank };
-    setCredentials([...credentials, newCredential]);
+    const updatedCredentials = [...credentials, newCredential];
+
+    setCredentials([updatedCredentials]);
+    updateLocalStorage(updatedCredentials);
   };
 
   // Function to edit an existing credential
@@ -30,12 +43,14 @@ const HandlerCredentialsTable = () => {
       return item;
     });
     setCredentials(updatedCredentials);
+    updateLocalStorage(updatedCredentials);
   };
 
   // Function to delete a credential
   const deleteCredential = (id) => {
     const updatedCredentials = credentials.filter(item => item.id !== id);
     setCredentials(updatedCredentials);
+    updateLocalStorage(updatedCredentials);
   };
 
   const handleEdit = (id, username, password, handlerName, registrationNumber, rank) => {
@@ -54,21 +69,40 @@ const HandlerCredentialsTable = () => {
       setEditableId(null);
     }
   };
+//call the API to add a new handler
+  const handleAddUserAPI = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/kennel/handler', {
+        username: newUsername,
+        password: newPassword,
+        handlerName: newHandlerName,
+        registrationNumber: newRegistrationNumber,
+        rank: newRank,
+      });
+      console.log(response.data); // Log the response data if needed
+      // Add any additional logic after successful API call
+    } catch (error) {
+      console.error('Error adding user:', error);
+      // Handle error scenario, show error message, etc.
+    }
+  };
 
-  const handleAddUser = () => {
+  const handleAddUserButton = () => {
     addCredential(newUsername, newPassword, newHandlerName, newRegistrationNumber, newRank);
     setNewUsername('');
     setNewPassword('');
     setNewHandlerName('');
     setNewRegistrationNumber('');
     setNewRank('');
+
+    handleAddUserAPI(); //call the API to add a new handler after adding the handler to the table
   };
 
   const handleDelete = (id) => {
     deleteCredential(id);
   };
 
-  const rankOptions = ['Rank 1', 'Rank 2', 'Rank 3', 'Rank 4']; // Add your rank options here
+  const rankOptions = ['Constable', 'Sergeant', 'SI']; // Add your rank options here
 
   return (
     <div>
@@ -203,7 +237,7 @@ const HandlerCredentialsTable = () => {
               />
             </td>
             <td>
-              <Button variant="success" onClick={handleAddUser}>Add User</Button>
+              <Button variant="success" onClick={handleAddUserButton}>Add User</Button>
             </td>
           </tr>
         </tbody>
