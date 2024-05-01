@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 //style the date picker
 import 'react-datepicker/dist/react-datepicker.css';
-import { Navigate, useNavigate } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import '../App.css'
+import axios from 'axios';
 
 
 
 
 const DogAccountCreate = () => {
+  const {username}=useParams();
   const [image, setImage] = useState(null);
   const [name, setName] = useState('');
   const [registrationNumber, setRegistrationNumber] = useState('');
@@ -22,6 +24,31 @@ const DogAccountCreate = () => {
   const [handlerName, setHandlerName] = useState('');
   const [handlerRegistrationNumber, setHandlerRegistrationNumber] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch handler details from the backend API
+    
+
+    
+    fetchHandlerDetails(username); // Call the API when the component mounts
+}, []);
+
+
+const fetchHandlerDetails = async (username) => {
+  try {
+    console.log("username came here  ",username);
+      const response = await axios.get(`http://localhost:5000/kennel/handlerdetails?username=${username}`);
+      const { data } = response;
+      if (data.name && data.handlerRegNo) {
+          setHandlerName(data.name);
+          setHandlerRegistrationNumber(data.handlerRegNo);
+      } else {
+          console.error('Handler details not found');
+      }
+  } catch (error) {
+      console.error('Error fetching handler details:', error);
+  }
+};
 
   const handleImageChange = (event) => {
     setImage(event.target.files[0]);
@@ -120,11 +147,12 @@ const DogAccountCreate = () => {
       </div>
       <div className="mb-3">
         <label htmlFor="handlerName" className="form-label">Handler Name:</label>
-        <input type="text" className="form-control" id="handlerName" value={handlerName} onChange={(event) => setHandlerName(event.target.value)} />
+       
+          <input type="text" className="form-control" id="handlerName" value={handlerName} readOnly />  {/*fetch autofilling values*/ }
       </div>
       <div className="mb-3">
         <label htmlFor="handlerRegistrationNumber" className="form-label">Handler Registration Number:</label>
-        <input type="text" className="form-control" id="handlerRegistrationNumber" value={handlerRegistrationNumber} onChange={(event) => setHandlerRegistrationNumber(event.target.value)} />
+        <input type="text" className="form-control" id="handlerRegistrationNumber" value={handlerRegistrationNumber} readOnly />
       </div>
       <button type="submit" className="btn btn-primary">Create</button>
     </form>

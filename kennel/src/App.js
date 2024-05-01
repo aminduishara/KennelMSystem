@@ -28,7 +28,8 @@ import DeputyVetCredentialsTable from './Pages/DeputyVetCredentialsTable';
 import OicCredentialsTable from './Pages/OicCredentialsTable';
 import DirectorCredentialsTable from './Pages/DirectorCredentialsTable';
 import OicGenerateDailyReport from './Pages/OicGenerateDailyReport';
-import OicGenerateSummary from './Pages/OicGenerateSummary';  
+import OicGenerateSummary from './Pages/OicGenerateSummary';
+import { UserProvider } from './UserContext';
 
 
 
@@ -37,59 +38,59 @@ import OicGenerateSummary from './Pages/OicGenerateSummary';
 const App = () => {
     const [sickType] = useState(''); // Initialize with an empty string or default value
     return (
-        
-        
-        
-        <Router>
-            <Routes>
-                {/*call Welcome page in App.js as a component*/}
-                <Route path="/" element={<WelcomePage />} />
-                
-              
-               
-               
-                <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
-                <Route path="/Pages/HandlerLogin" element={<HandlerVetOICLogin name={"Handler Login"}/>} />
-                <Route path="/Pages/DeputyVetLogin" element={<HandlerVetOICLogin name={"Deputy Veterinary Login"}/>} />
-                <Route path="/Pages/OICLogin" element={<HandlerVetOICLogin name={"OIC Login"}/>} />
-                <Route path="/Pages/DirectorRegister" element ={<DirectorRegister/>}/>
-                <Route path="/Pages/DirectorLogin" element={<DirectorLogin/>}/>
-              
-                
-              
-                <Route path="/Pages/DogAccountCreate" element={<DogAccountCreate/>}/>
-              
-                <Route path="/Pages/DogProfile" element={<DogProfile />} /> 
-                <Route path="/Pages/AddDutyInfo" element={<AddDutyInfo />} />
-                <Route path="/Pages/AddTrainingInfo" element={<AddTrainingInfo />} />
-                <Route path="/Pages/AddBreedingInfo" element={<AddBreedingInfo />} />
 
-                <Route path="/Pages/DeputyVetSearchDogs" element={<DeputyVetSearchDogs/>} />
-                <Route path="/Pages/DeputyVetSearchedDogProfile/:accountId" element={<DeputyVetSearchedDogProfile sickType={sickType} />} />
-                <Route path="/Pages/AddHealthInfo" element={<AddHealthInfo />} />
-                <Route path="/Pages/AddVaccinationInfo" element={<AddVaccinationInfo />} />
-                <Route path="/Pages/AddDeathInfo" element={<AddDeathInfo />} />
-                <Route path="/Pages/OicDashboard" element={<OicDashboard />}/>
-                <Route path="/Pages/OicGenerateDailyReport" element={<OicGenerateDailyReport/>}/>
-                <Route path="/Pages/OicGenerateSummary" element={<OicGenerateSummary/>}/>
-                <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard/>}/>
-                <Route path="/Pages/DirectorSearchingDogProfiles" element={<DirectorSearchingDogProfiles />} />
-                
-                <Route path="/Pages/DirectorCredentialsManageButtons" element={<DirectorCredentialManagesButtons />} />
-                <Route path="/Pages/HandlerCredentialsTable" element={<HandlerCredentialsTable />}/>
-                <Route path="/Pages/DeputyVetCredentialsTable" element={<DeputyVetCredentialsTable/>}/>
-                <Route path="/Pages/OicCredentialsTable" element={<OicCredentialsTable />}/>
-                <Route path="/Pages/DirectorCredentialsTable" element={<DirectorCredentialsTable />} />
-                <Route path="/Pages/OicGenerateDailyReport" element={<OicGenerateDailyReport/>}/>
-                
+        <UserProvider>
 
-                 
+            <Router>
+                <Routes>
+                    {/*call Welcome page in App.js as a component*/}
+                    <Route path="/" element={<WelcomePage />} />
 
-            </Routes>
-        </Router>
-        
-    
-        
+
+
+
+                    <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
+                    <Route path="/Pages/HandlerLogin" element={<HandlerVetOICLogin name={"Handler Login"} />} />
+                    <Route path="/Pages/DeputyVetLogin" element={<HandlerVetOICLogin name={"Deputy Veterinary Login"} />} />
+                    <Route path="/Pages/OICLogin" element={<HandlerVetOICLogin name={"OIC Login"} />} />
+                    <Route path="/Pages/DirectorRegister" element={<DirectorRegister />} />
+                    <Route path="/Pages/DirectorLogin" element={<DirectorLogin />} />
+
+
+
+                    <Route path="/Pages/DogAccountCreate/:username" element={<DogAccountCreate />} />
+
+                    <Route path="/Pages/DogProfile" element={<DogProfile />} />
+                    <Route path="/Pages/AddDutyInfo" element={<AddDutyInfo />} />
+                    <Route path="/Pages/AddTrainingInfo" element={<AddTrainingInfo />} />
+                    <Route path="/Pages/AddBreedingInfo" element={<AddBreedingInfo />} />
+
+                    <Route path="/Pages/DeputyVetSearchDogs" element={<DeputyVetSearchDogs />} />
+                    <Route path="/Pages/DeputyVetSearchedDogProfile/:accountId" element={<DeputyVetSearchedDogProfile sickType={sickType} />} />
+                    <Route path="/Pages/AddHealthInfo" element={<AddHealthInfo />} />
+                    <Route path="/Pages/AddVaccinationInfo" element={<AddVaccinationInfo />} />
+                    <Route path="/Pages/AddDeathInfo" element={<AddDeathInfo />} />
+                    <Route path="/Pages/OicDashboard" element={<OicDashboard />} />
+                    <Route path="/Pages/OicGenerateDailyReport" element={<OicGenerateDailyReport />} />
+                    <Route path="/Pages/OicGenerateSummary" element={<OicGenerateSummary />} />
+                    <Route path="/Pages/DirectorDashboard" element={<DirectorDashboard />} />
+                    <Route path="/Pages/DirectorSearchingDogProfiles" element={<DirectorSearchingDogProfiles />} />
+
+                    <Route path="/Pages/DirectorCredentialsManageButtons" element={<DirectorCredentialManagesButtons />} />
+                    <Route path="/Pages/HandlerCredentialsTable" element={<HandlerCredentialsTable />} />
+                    <Route path="/Pages/DeputyVetCredentialsTable" element={<DeputyVetCredentialsTable />} />
+                    <Route path="/Pages/OicCredentialsTable" element={<OicCredentialsTable />} />
+                    <Route path="/Pages/DirectorCredentialsTable" element={<DirectorCredentialsTable />} />
+                    <Route path="/Pages/OicGenerateDailyReport" element={<OicGenerateDailyReport />} />
+
+
+
+
+                </Routes>
+            </Router>
+        </UserProvider>
+
+
     );
 };
 
