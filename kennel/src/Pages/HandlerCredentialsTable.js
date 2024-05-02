@@ -1,112 +1,167 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Dropdown } from 'react-bootstrap';
 import Footer from '../Components/Footer';
-import axios from 'axios';
+import axios from './../axiosConfig';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
-  const [editableId, setEditableId] = useState(null);
-  const [editedUsername, setEditedUsername] = useState('');
-  const [editedPassword, setEditedPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [editableId, setEditableId] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newHandlerName, setNewHandlerName] = useState('');
+  const [editedUsername, setEditedUsername] = useState('');
+  const [editedPassword, setEditedPassword] = useState('');
+  const [editedRegistrationNumber, setEditedRegistrationNumber] = useState('');
+  const [editedDeputyVetName, setEditedDeputyVetName] = useState('');
+  const [editedDeputyRank, setEditedDeputyRank] = useState('');
+  const [newDeputyVetName, setNewDeputyVetName] = useState('');
   const [newRegistrationNumber, setNewRegistrationNumber] = useState('');
   const [newRank, setNewRank] = useState('');
- //permanent storage of the handler details
- useEffect(() => {
-  const storedCredentials = JSON.parse(localStorage.getItem('credentials')) || [];
-  setCredentials(storedCredentials);
-}, []);
 
-const updateLocalStorage = (updatedCredentials) => {
-  localStorage.setItem('credentials', JSON.stringify(updatedCredentials));
-};
+  // Permanent storage of the deputy vet credentials
+  useEffect(() => {
+    const storedCredentials = JSON.parse(localStorage.getItem('deputyVetCredentials')) || [];
+    setCredentials(storedCredentials);
+  }, []);
 
   // Function to add a new credential
-  const addCredential = (username, password, handlerName, registrationNumber, rank) => {
-    const newId = credentials.length + 1;
-    const newCredential = { id: newId, username, password, handlerName, registrationNumber, rank };
-    const updatedCredentials = [...credentials, newCredential];
-
-    setCredentials([updatedCredentials]);
-    updateLocalStorage(updatedCredentials);
+  const addCredential = async (id, credential) => {
+    const newCredential = { id: id, ...credential };
+    setCredentials([...credentials, newCredential]);
   };
 
   // Function to edit an existing credential
-  const editCredential = (id, username, password, handlerName, registrationNumber, rank) => {
+  const editCredential = async (id, editedUsername, editedPassword, editedRegistrationNumber, editedDeputyVetName, editedDeputyRank) => {
+    if (!id || id == '' || !editedUsername || editedUsername == '' || !editedPassword || editedPassword == '' || !editedRegistrationNumber || editedRegistrationNumber == '' || !editedDeputyVetName || editedDeputyVetName == '' || !editedDeputyRank || editedDeputyRank == '') {
+      alert('Add all the information');
+      return;
+    }
+    const formData = {
+      "id": id,
+      "username": editedUsername,
+      "password": editedPassword,
+      "deputyVetName": editedRegistrationNumber,
+      "registrationNumber": editedDeputyVetName,
+      "rank": editedDeputyRank,
+    };
+    try {
+      const response = await axios.post('/updateUser', formData);
+
+    } catch (error) {
+      console.error('Error update OIC:', error);
+      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+    }
     const updatedCredentials = credentials.map(item => {
       if (item.id === id) {
-        return { ...item, username, password, handlerName, registrationNumber, rank };
+        return {
+          ...item,
+          registrationNumber: editedRegistrationNumber !== undefined ? editedRegistrationNumber : item.registrationNumber,
+          deputyVetName: editedDeputyVetName !== undefined ? editedDeputyVetName : item.deputyVetName,
+          rank: editedDeputyRank !== undefined ? editedDeputyRank : item.rank,
+          username: editedUsername !== undefined ? editedUsername : item.username,
+          password: editedPassword !== undefined ? editedPassword : item.password
+        };
       }
       return item;
     });
     setCredentials(updatedCredentials);
-    updateLocalStorage(updatedCredentials);
   };
 
   // Function to delete a credential
-  const deleteCredential = (id) => {
+  const deleteCredential = async (id) => {
+    if (id == '') {
+      alert('Invalid user');
+      return;
+    }
+    const formData = {
+      "id": id
+    };
+    try {
+      const response = await axios.post('/removeUser', formData);
+
+    } catch (error) {
+      console.error('Error removing Veterinary :', error);
+      alert('An error occurred while removing Veterinary . Please try again later.'); // Display user-friendly message
+    }
     const updatedCredentials = credentials.filter(item => item.id !== id);
     setCredentials(updatedCredentials);
-    updateLocalStorage(updatedCredentials);
   };
 
-  const handleEdit = (id, username, password, handlerName, registrationNumber, rank) => {
-    setEditableId(id);
-    setEditedUsername(username);
-    setEditedPassword(password);
-    setPasswordVisible(true);
-    setNewHandlerName(handlerName);
-    setNewRegistrationNumber(registrationNumber);
-    setNewRank(rank);
+  const handleEdit = (credential) => {
+    setEditableId(credential.id);
+    setEditedUsername(credential.username);
+    setEditedPassword(credential.password);
+    setEditedRegistrationNumber(credential.registrationNumber);
+    setEditedDeputyVetName(credential.deputyVetName);
+    setEditedDeputyRank(credential.rank);
   };
 
   const handleSave = (id) => {
     if (editableId === id) {
-      editCredential(id, editedUsername, editedPassword, newHandlerName, newRegistrationNumber, newRank);
+      editCredential(id, editedUsername, editedPassword, editedRegistrationNumber, editedDeputyVetName, editedDeputyRank);
       setEditableId(null);
     }
   };
-//call the API to add a new handler
-  const handleAddUserAPI = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/kennel/handler', {
-        username: newUsername,
-        password: newPassword,
-        handlerName: newHandlerName,
-        registrationNumber: newRegistrationNumber,
-        rank: newRank,
-      });
-      console.log(response.data); // Log the response data if needed
-      // Add any additional logic after successful API call
-    } catch (error) {
-      console.error('Error adding user:', error);
-      // Handle error scenario, show error message, etc.
-    }
-  };
 
-  const handleAddUserButton = () => {
-    addCredential(newUsername, newPassword, newHandlerName, newRegistrationNumber, newRank);
+  const handleAddUserButton = async () => {
+    const formData = {
+      username: newUsername,
+      password: newPassword,
+      deputyVetName: newDeputyVetName,
+      registrationNumber: newRegistrationNumber,
+      rank: newRank,
+      type: "HANDLER",
+    };
+    try {
+      // Make a POST request to the backend API
+      const response = await axios.post('/register', formData);
+
+      // Check if registration was successful
+      if (response.status === 200 && response.data) {
+        console.log('Veterinary registered successfully:', response.data);
+        // Redirect to the login page upon successful registration
+        addCredential(response.data.insertId, formData);
+      } else {
+        // Handle unsuccessful registration
+        console.error('Error registering Veterinary:', response.data.message);
+        alert('Failed to register veterinary . Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error registering Veterinary:', error);
+      alert('An error occurred while registering Veterinary. Please try again later.'); // Display user-friendly message
+    }
     setNewUsername('');
     setNewPassword('');
-    setNewHandlerName('');
+    setNewDeputyVetName('');
     setNewRegistrationNumber('');
     setNewRank('');
-
-    handleAddUserAPI(); //call the API to add a new handler after adding the handler to the table
   };
 
   const handleDelete = (id) => {
     deleteCredential(id);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getUsers?type=HANDLER');
+        setCredentials(response.data); // Assuming response.data contains the users
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData(); // Invoke the async function immediately
+  }, []);
+
   const rankOptions = ['Constable', 'Sergeant', 'SI']; // Add your rank options here
 
   return (
     <div>
-      <h3 className="text-center">Handler Credentials Table</h3><br />
+      <h3 className="text-center">Handler Credentials Table</h3>
+      <br />
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -119,14 +174,14 @@ const updateLocalStorage = (updatedCredentials) => {
           </tr>
         </thead>
         <tbody>
-          {credentials.map(credential => (
+          {credentials.map((credential) => (
             <tr key={credential.id}>
               <td>
                 {editableId === credential.id ? (
                   <Form.Control
                     type="text"
-                    value={newRegistrationNumber}
-                    onChange={(e) => setNewRegistrationNumber(e.target.value)}
+                    value={editedRegistrationNumber}
+                    onChange={(e) => setEditedRegistrationNumber(e.target.value)}
                   />
                 ) : (
                   credential.registrationNumber
@@ -136,27 +191,32 @@ const updateLocalStorage = (updatedCredentials) => {
                 {editableId === credential.id ? (
                   <Form.Control
                     type="text"
-                    value={newHandlerName}
-                    onChange={(e) => setNewHandlerName(e.target.value)}
+                    value={editedDeputyVetName}
+                    onChange={(e) => setEditedDeputyVetName(e.target.value)}
                   />
                 ) : (
-                  credential.handlerName
+                  credential.deputyVetName
                 )}
               </td>
               <td>
                 {editableId === credential.id ? (
                   <Dropdown>
                     <Dropdown.Toggle variant="primary">
-                      {newRank || 'Select Rank'}
+                      {editedDeputyRank || 'Select Rank'}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                      {rankOptions.map(option => (
-                        <Dropdown.Item key={option} onClick={() => setNewRank(option)}>
-                          {option}
+                      {rankOptions.map((option2) => (
+                        <Dropdown.Item key={option2} onClick={() => setEditedDeputyRank(option2)}>
+                          {option2}
                         </Dropdown.Item>
                       ))}
                     </Dropdown.Menu>
                   </Dropdown>
+                  // <Form.Control
+                  //   type="text"
+                  //   value={editedDeputyRank}
+                  //   onChange={(e) => setEditedDeputyRank(e.target.value)}
+                  // />
                 ) : (
                   credential.rank
                 )}
@@ -182,14 +242,33 @@ const updateLocalStorage = (updatedCredentials) => {
                 ) : (
                   '********'
                 )}
+                {/* Toggle password visibility */}
+                {/* <Button
+                  variant="outline-secondary"
+                  className="ms-2"
+                  onClick={() => setPasswordVisible((prevState) => !prevState)}
+                > */}
+                {
+                  // passwordVisible ?
+                  // <FaEyeSlash />
+                  // :
+                  // <FaEye />
+                }
+                {/* </Button> */}
               </td>
               <td>
                 {editableId === credential.id ? (
                   <Button variant="success" className="me-2" onClick={() => handleSave(credential.id)}>Save</Button>
                 ) : (
-                  <Button variant="primary" className="me-2" onClick={() => handleEdit(credential.id, credential.username, credential.password, credential.handlerName, credential.registrationNumber, credential.rank)}>Edit</Button>
+                  <Button variant="primary" className="me-2" onClick={() => handleEdit(credential)}>Edit</Button>
                 )}
-                <Button variant="danger" className="custom-delete-btn-handlerCredentialTable" onClick={() => handleDelete(credential.id)}>Delete</Button>
+                <Button
+                  variant="danger"
+                  className="custom-delete-btn-handlerCredentialTable"
+                  onClick={() => handleDelete(credential.id)}
+                >
+                  Delete
+                </Button>
               </td>
             </tr>
           ))}
@@ -204,8 +283,8 @@ const updateLocalStorage = (updatedCredentials) => {
             <td>
               <Form.Control
                 type="text"
-                value={newHandlerName}
-                onChange={(e) => setNewHandlerName(e.target.value)}
+                value={newDeputyVetName}
+                onChange={(e) => setNewDeputyVetName(e.target.value)}
               />
             </td>
             <td>
@@ -214,7 +293,7 @@ const updateLocalStorage = (updatedCredentials) => {
                   {newRank || 'Select Rank'}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {rankOptions.map(option => (
+                  {rankOptions.map((option) => (
                     <Dropdown.Item key={option} onClick={() => setNewRank(option)}>
                       {option}
                     </Dropdown.Item>
@@ -237,7 +316,9 @@ const updateLocalStorage = (updatedCredentials) => {
               />
             </td>
             <td>
-              <Button variant="success" onClick={handleAddUserButton}>Add User</Button>
+              <Button variant="success" onClick={handleAddUserButton}>
+                Add User
+              </Button>
             </td>
           </tr>
         </tbody>

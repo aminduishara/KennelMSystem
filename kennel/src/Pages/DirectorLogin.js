@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
-import axios from 'axios';
+import axios from './../axiosConfig';
 import LoginFailedModal from '../Components/LoginFailedModal';
+import { useUser } from './../UserContext';
 
 const DirectorLogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const { setUserId } = useUser();
   const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
@@ -36,13 +38,14 @@ const DirectorLogin = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/kennel/login', {
+      const response = await axios.post('/login', {
         username,
         password,
       });
 
       if (response.data.success) {
-        console.log('Login successful');
+        console.log(response.data.data.userId);
+        setUserId(response.data.data.userId);
         navigate('/Pages/DirectorDashboard'); // Navigate on successful login
       } else {
         console.log('Login failed');
@@ -91,7 +94,7 @@ const DirectorLogin = () => {
               onChange={handleRememberMeChange}
               className="form-check-input"
             />
-            <a href="!#" className="text-decoration-none text-start"><br/>Forgot password?</a>
+            <a href="!#" className="text-decoration-none text-start"><br />Forgot password?</a>
           </div>
 
           <button type="submit" className="btn btn-primary fw-bold">Login</button>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
 
 const OicCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
@@ -12,14 +13,29 @@ const OicCredentialsTable = () => {
   const [newPassword, setNewPassword] = useState('');
 
   // Function to add a new credential
-  const addCredential = (username, password) => {
-    const newId = credentials.length + 1;
-    const newCredential = { id: newId, username, password };
+  const addCredential = (id, username, password) => {
+    const newCredential = { id: id, username, password };
     setCredentials([...credentials, newCredential]);
   };
 
   // Function to edit an existing credential
-  const editCredential = (id, username, password) => {
+  const editCredential = async (id, username, password) => {
+    if (!id || id == '' || !username || username == '' || !password || password == '') {
+      alert('Add all the information');
+      return;
+    }
+    const formData = {
+      "id": id,
+      "username": username,
+      "password": password
+    };
+    try {
+      const response = await axios.post('/updateUser', formData);
+
+    } catch (error) {
+      console.error('Error update OIC:', error);
+      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+    }
     const updatedCredentials = credentials.map(item => {
       if (item.id === id) {
         return { ...item, username, password };
@@ -30,7 +46,21 @@ const OicCredentialsTable = () => {
   };
 
   // Function to delete a credential
-  const deleteCredential = (id) => {
+  const deleteCredential = async (id) => {
+    if (id == '') {
+      alert('Invalid user');
+      return;
+    }
+    const formData = {
+      "id": id
+    };
+    try {
+      const response = await axios.post('/removeUser', formData);
+
+    } catch (error) {
+      console.error('Error removing OIC:', error);
+      alert('An error occurred while removing OIC. Please try again later.'); // Display user-friendly message
+    }
     const updatedCredentials = credentials.filter(item => item.id !== id);
     setCredentials(updatedCredentials);
   };
@@ -49,8 +79,39 @@ const OicCredentialsTable = () => {
     }
   };
 
-  const handleAddUser = () => {
-    addCredential(newUsername, newPassword);
+  const handleAddUser = async () => {
+    // Frontend form validation
+    if (newUsername == '' || newPassword == '') {
+      alert('Add the username and password!');
+      return;
+    }
+
+    const formData = {
+      "username": newUsername,
+      "password": newPassword,
+      "email": null,
+      "type": "OIC"
+    };
+
+    try {
+      // Make a POST request to the backend API
+      const response = await axios.post('/register', formData);
+
+      // Check if registration was successful
+      if (response.status === 200 && response.data) {
+        console.log('OIC registered successfully:', response.data);
+        // Redirect to the login page upon successful registration
+        addCredential(response.data.insertId, newUsername, newPassword);
+      } else {
+        // Handle unsuccessful registration
+        console.error('Error registering OIC:', response.data.message);
+        alert('Failed to register director. Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error registering OIC:', error);
+      alert('An error occurred while registering OIC. Please try again later.'); // Display user-friendly message
+    }
     setNewUsername('');
     setNewPassword('');
   };
@@ -59,9 +120,24 @@ const OicCredentialsTable = () => {
     deleteCredential(id);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getUsers?type=OIC');
+        setCredentials(response.data); // Assuming response.data contains the users
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData(); // Invoke the async function immediately
+  }, []);
+
+
   return (
     <div>
-      <h3 className="text-center">OIC Credentials Table</h3><br/>
+      <h3 className="text-center">OIC Credentials Table</h3><br />
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -126,7 +202,7 @@ const OicCredentialsTable = () => {
           </tr>
         </tbody>
       </Table>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

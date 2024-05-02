@@ -46,7 +46,7 @@ const HandlerVetOICLogin = ({ name }) => {
                     // Example: Make an API call specific to Handler login
                     const handlerResponse = await axios.post('http://localhost:5000/kennel/handlerlogin', { username, password });
                     console.log('Handler Login Response:', handlerResponse.data);
-                    redirectPath = '/Pages/DogAccountCreate';
+                    redirectPath = `/Pages/DogAccountCreate/${username}`; //for the dog account create 2 feilds auto filling purpose
                     break;
                 case 'DeputyVet':
                     // Example: Make an API call specific to Deputy Vet login

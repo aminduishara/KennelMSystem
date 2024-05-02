@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import Footer from '../Components/Footer';
 import '../App.css';
-import axios from 'axios';
- 
+import axios from './../axiosConfig';
+
 
 const DirectorRegister = () => {
     const [username, setUsername] = useState('');
@@ -36,39 +36,45 @@ const DirectorRegister = () => {
         setEmail('');
     };
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Check if passwords match before submitting the form
+
+        // Frontend form validation
         if (password !== repeatPassword) {
             alert('Passwords do not match!');
             return;
         }
+
+        // Prepare form data
         const formData = {
             username,
             password,
-            email
+            email,
+            type: "DIRECTOR", // Assuming 'type' is always "handler"
         };
-        
+
         try {
-            // Make a POST request to your backend API
-            const response = await axios.post('http://localhost:5000/kennel/register', formData);
-    
-            console.log('Director registered successfully:', response.data);
-            // Redirect or navigate to DirectorDashboard upon successful registration
-            navigate('/Pages/DirectorLogin');
-        }catch (error) {
+            // Make a POST request to the backend API
+            const response = await axios.post('/register', formData);
+            console.log(response.status);
+
+            // Check if registration was successful
+            if (response.status === 200 && response.data) {
+                console.log('Director registered successfully:', response.data);
+                // Redirect to the login page upon successful registration
+                navigate('/Pages/DirectorLogin');
+            } else {
+                // Handle unsuccessful registration
+                console.error('Error registering Director:', response.data.message);
+                alert('Failed to register director. Please try again.'); // Display user-friendly message
+            }
+        } catch (error) {
+            // Handle network errors or other exceptions
             console.error('Error registering Director:', error);
-            // Handle error cases, such as displaying an error message to the user
+            alert('An error occurred while registering director. Please try again later.'); // Display user-friendly message
         }
-        
-
-        
-
-        // Simulating a successful registration and navigating to DirectorDashboard
-        console.log('Director registered successfully!');
-        navigate('/Pages/DirectorLogin');
-        
     };
+
 
     return (
         <Container className="mt-5">
