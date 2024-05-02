@@ -1,132 +1,114 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, Button, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
+import { useUser } from './../UserContext';
+import axios from './../axiosConfig';
 
 const DirectorCredentialsTable = () => {
-  const [credentials, setCredentials] = useState([]);
-  const [editableId, setEditableId] = useState(null);
-  const [editedUsername, setEditedUsername] = useState('');
-  const [editedPassword, setEditedPassword] = useState('');
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const { userId } = useUser();
+  const navigate = useNavigate();
 
-  // Function to add a new credential
-  const addCredential = (username, password) => {
-    const newId = credentials.length + 1;
-    const newCredential = { id: newId, username, password };
-    setCredentials([...credentials, newCredential]);
-  };
-
-  // Function to edit an existing credential
-  const editCredential = (id, username, password) => {
-    const updatedCredentials = credentials.map(item => {
-      if (item.id === id) {
-        return { ...item, username, password };
-      }
-      return item;
-    });
-    setCredentials(updatedCredentials);
-  };
-
-  // Function to delete a credential
-  const deleteCredential = (id) => {
-    const updatedCredentials = credentials.filter(item => item.id !== id);
-    setCredentials(updatedCredentials);
-  };
-
-  const handleEdit = (id, username, password) => {
-    setEditableId(id);
-    setEditedUsername(username);
-    setEditedPassword(password);
-    setPasswordVisible(true);
-  };
-
-  const handleSave = (id) => {
-    if (editableId === id) {
-      editCredential(id, editedUsername, editedPassword);
-      setEditableId(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password == '' || confirmPassword == '' || password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    const formData = {
+      "id": userId,
+      "username": username,
+      "password": confirmPassword,
+      "email": email,
+    };
+    try {
+      const response = await axios.post('/updateUser', formData);
+      navigate('/Pages/DirectorCredentialsManageButtons');
+    } catch (error) {
+      console.error('Error update OIC:', error);
+      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
     }
   };
 
-  const handleAddUser = () => {
-    addCredential(newUsername, newPassword);
-    setNewUsername('');
-    setNewPassword('');
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getUser?userId=' + userId);
+        console.log(response.data[0]);
+        setUsername(response.data[0].username);
+        setEmail(response.data[0].email);
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
 
-  const handleDelete = (id) => {
-    deleteCredential(id);
-  };
+    fetchData(); // Invoke the async function immediately
+  }, []);
 
   return (
-    <div>
-      <h3 className="text-center">My Credentials Table</h3><br/>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {credentials.map(credential => (
-            <tr key={credential.id}>
-              <td>
-                {editableId === credential.id ? (
-                  <Form.Control
-                    type="text"
-                    value={editedUsername}
-                    onChange={(e) => setEditedUsername(e.target.value)}
-                  />
-                ) : (
-                  credential.username
-                )}
-              </td>
-              <td>
-                {editableId === credential.id ? (
-                  <Form.Control
-                    type={passwordVisible ? 'text' : 'password'}
-                    value={editedPassword}
-                    onChange={(e) => setEditedPassword(e.target.value)}
-                  />
-                ) : (
-                  '********'
-                )}
-              </td>
-              <td>
-                {editableId === credential.id ? (
-                  <Button variant="success" className="me-2" onClick={() => handleSave(credential.id)}>Save</Button>
-                ) : (
-                  <Button variant="primary" className="me-2" onClick={() => handleEdit(credential.id, credential.username, credential.password)}>Edit</Button>
-                )}
-                <Button variant="danger" className="custom-delete-btn-handlerCredentialTable" onClick={() => handleDelete(credential.id)}>Delete</Button>
-              </td>
-            </tr>
-          ))}
-          <tr>
-            <td>
+    <div className="container">
+      <h3 className="text-center">My Credentials Table</h3><br />
+      <form onSubmit={handleSubmit}>
+        <div className="col-12">
+          <div className="row g-3 align-items-center justify-content-center">
+            <div className="col-1">
+              <label htmlFor="txtUsername">Username</label>
+            </div>
+            <div className="col-5">
               <Form.Control
-                type="text"
-                value={newUsername}
-                onChange={(e) => setNewUsername(e.target.value)}
+                type='text'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-            </td>
-            <td>
+            </div>
+          </div>
+          <div className="row g-3 align-items-center justify-content-center mt-3">
+            <div className="col-1">
+              <label htmlFor="txtUsername">Email</label>
+            </div>
+            <div className="col-5">
               <Form.Control
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
+                type='text'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
-            </td>
-            <td>
-              <Button variant="success" onClick={handleAddUser}>Add User</Button>
-            </td>
-          </tr>
-        </tbody>
-      </Table>
-      <Footer/>
+            </div>
+          </div>
+          <div className="row g-3 align-items-center justify-content-center mt-3">
+            <div className="col-1">
+              <label htmlFor="txtUsername">Password</label>
+            </div>
+            <div className="col-5">
+              <Form.Control
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="row g-3 align-items-center justify-content-center mt-3">
+            <div className="col-1">
+              <label htmlFor="txtUsername">Confirm Password</label>
+            </div>
+            <div className="col-5">
+              <Form.Control
+                type='password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="offset-7 col-2 d-flex justify-content-end mt-3">
+            <button className='btn btn-primary'>Update</button>
+          </div>
+        </div>
+      </form>
+      <Footer />
     </div>
   );
 };
