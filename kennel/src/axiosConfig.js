@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000/kennel', // backend domain
+    baseURL: process.env.REACT_APP_API_URL + '/kennel',
 });
 
 export default instance;

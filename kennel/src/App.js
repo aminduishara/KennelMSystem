@@ -44,7 +44,8 @@ const App = () => {
             <Router>
                 <Routes>
                     {/*call Welcome page in App.js as a component*/}
-                    <Route path="/" element={<WelcomePage />} />
+                    <Route path="/" element={<DirectorLogin />} />
+                    {/* <Route path="/" element={<WelcomePage />} /> */}
 
 
 
@@ -58,7 +59,7 @@ const App = () => {
 
 
 
-                    <Route path="/Pages/DogAccountCreate/:username" element={<DogAccountCreate />} />
+                    <Route path="/Pages/DogAccountCreate" element={<DogAccountCreate />} />
 
                     <Route path="/Pages/DogProfile" element={<DogProfile />} />
                     <Route path="/Pages/AddDutyInfo" element={<AddDutyInfo />} />

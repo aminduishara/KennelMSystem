@@ -4,7 +4,7 @@ const router = express.Router();
 
 const handlerController = require('../controllers/HandlerCredentialsController');
 const { handleRegisterDirector, handleLoginDirector, handleRemoveUser, handleUpdateUser, handleGetUser, handleGetSingleUser } = require('../controllers/DirectorController');
-const handlerLoginController = require('../controllers/HandlerLoginController');
+const { handleGetDogInfo, handleRegisterDogInfo, handleUpdateDogInfo, handleAddDuty, handleGetDuty, handleAddTraining, handleGetTraining } = require('../controllers/HandlerController');
 //importing the handlerDetailsAutoFillingController
 const handlerDetailsAutoFillingController = require('../controllers/HandlerDetailsAutoFillingController');
 
@@ -15,6 +15,15 @@ router.post('/updateUser', handleUpdateUser);
 router.get('/getUsers/?', handleGetUser);
 router.get('/getUser/?', handleGetSingleUser);
 
+// Handler dashboard
+router.get('/getDogInfo/?', handleGetDogInfo);
+router.post('/registerDog', handleRegisterDogInfo);
+router.post('/updateDog', handleUpdateDogInfo);
+router.post('/addDuty', handleAddDuty);
+router.get('/getDuty/?', handleGetDuty);
+router.post('/addTraining', handleAddTraining);
+router.get('/getTraining/?', handleGetTraining);
+
 // Route to login a director
 router.post('/login', handleLoginDirector);
 
@@ -23,7 +32,7 @@ router.get('/handler', handlerController.getAllHandlers);
 // Route to add a handler
 router.post('/handler', handlerController.addHandler);
 // Route to login a handler
-router.post('/handlerlogin', handlerLoginController.handleLoginHandler);
+// router.post('/handlerlogin', handlerLoginController.handleLoginHandler);
 // Route to get handler details by username
 router.get('/handlerdetails', handlerDetailsAutoFillingController.handleGetHandlerDetails);
 
