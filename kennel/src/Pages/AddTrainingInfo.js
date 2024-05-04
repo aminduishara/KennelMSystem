@@ -1,17 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
+import { useLocation } from 'react-router-dom';
 
 const AddTrainingInfo = () => {
+  const location = useLocation();
+  const regNo = location.state.regNo;
+
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     date: '',
     trainingName: '',
-    subject: '',
     environment: '',
     recommendedDuration: '',
     startDate: '',
     endDate: '',
+    subject: 'Narcotic',
     weaknesses: '',
     description: '',
   });
@@ -29,21 +34,39 @@ const AddTrainingInfo = () => {
     setTrainingList(updatedTrainingList);
   };
 
-  const handleTrainingInfo = () => {
-    const newTraining = { ...formData };
-    setTrainingList([...trainingList, newTraining]);
-    setFormData({
-      date: '',
-      trainingName: '',
-      subject: '',
-      environment: '',
-      recommendedDuration: '',
-      startDate: '',
-      endDate: '',
-      weaknesses: '',
-      description: '',
-    });
-    handleCloseModal(); // Close modal after adding training info
+  const handleTrainingInfo = async () => {
+    if (!formData || !formData.date || !formData.description || !formData.endDate || !formData.environment || !formData.recommendedDuration || !formData.startDate || !formData.trainingName || !formData.weaknesses) {
+      alert('Please fill all the data');
+      return;
+    }
+    const newDuty = { ...formData, regNo };
+    try {
+      const response = await axios.post('/addTraining', newDuty);
+
+      if (response.status === 200 && response.data) {
+        const newTraining = { ...formData };
+        setTrainingList([...trainingList, newTraining]);
+        setFormData({
+          date: '',
+          trainingName: '',
+          subject: '',
+          environment: '',
+          recommendedDuration: '',
+          startDate: '',
+          endDate: '',
+          weaknesses: '',
+          description: '',
+        });
+        handleCloseModal(); // Close modal after adding training info
+      } else {
+        console.error('Error adding duty:', response.data.message);
+        alert('Failed to adding duty. Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error adding duty:', error);
+      alert('An error occurred while adding duty. Please try again later.'); // Display user-friendly message
+    }
   };
 
   const handleEditRow = (index) => {
@@ -52,6 +75,44 @@ const AddTrainingInfo = () => {
 
   const handleSaveRow = () => {
     setEditableIndex(null);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getTraining?reg=' + regNo);
+        if (response.data) {
+          const modifiedData = response.data.map(item => ({
+            ...item,
+            date: formatDate(item.date),
+            startDate: formatDate(item.startDate),
+            endDate: (item.endDate != '' && item.endDate != '0000-00-00') ? formatDate(item.endDate) : '',
+            trainingName: item.name,
+            recommendedDuration: item.duration,
+            trainingDescription: item.description,
+            weaknesses: item.weakness
+          }));
+          setTrainingList(modifiedData);
+        }
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData();
+
+  }, [])
+
+  // Format date to 'Y-m-d' (Year-Month-Day) format
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    let month = (1 + formattedDate.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month; // Add leading zero if month is single digit
+    let day = formattedDate.getDate().toString();
+    day = day.length > 1 ? day : '0' + day; // Add leading zero if day is single digit
+    return year + '-' + month + '-' + day;
   };
 
   return (
@@ -66,7 +127,7 @@ const AddTrainingInfo = () => {
           <Modal.Title>Add Training Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-         
+
           <Form>
             <Form.Group controlId="formDate">
               <Form.Label>Date:</Form.Label>
@@ -80,9 +141,9 @@ const AddTrainingInfo = () => {
             <Form.Group controlId="subject">
               <Form.Label>Subject</Form.Label>
               <Form.Control as="select" name="subject" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })}>
-                <option value="success">Narcotic</option>
-                <option value="unsuccessful">Explosive</option>
-                <option value="in progress">Criminal</option>
+                <option value="Narcotic">Narcotic</option>
+                <option value="Explosive">Explosive</option>
+                <option value="Criminal">Criminal</option>
               </Form.Control>
             </Form.Group>
 
@@ -113,10 +174,10 @@ const AddTrainingInfo = () => {
             </Form.Group>
 
 
-            
+
             <Form.Group controlId="trainingDescription">
               <Form.Label>Description:</Form.Label>
-              <Form.Control as="textarea" rows={5} name="trainingDescription" value={formData.trainingDescription} onChange={(e) => setFormData({ ...formData, trainingDescription: e.target.value })} />
+              <Form.Control as="textarea" rows={5} name="trainingDescription" value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
             </Form.Group>
 
           </Form>
@@ -151,10 +212,10 @@ const AddTrainingInfo = () => {
           <tbody>
             {trainingList.map((training, index) => (
               <tr key={index}>
-                
-                
-                
-                
+
+
+
+
                 <td>{editableIndex === index ? <Form.Control type="date" value={training.date} name="date" onChange={(e) => handleChange(e, index)} /> : training.date}</td>
                 <td>{editableIndex === index ? <Form.Control type="text" value={training.trainingName} name="trainingName" onChange={(e) => handleChange(e, index)} /> : training.trainingName}</td>
                 <td>{editableIndex === index ? <Form.Control as="select" value={training.subject} name="subject" onChange={(e) => handleChange(e, index)}><option value="success">Narcotic</option><option value="unsuccessful">Explosive</option><option value="in progress">Criminal</option></Form.Control> : training.subject}</td>
@@ -176,7 +237,7 @@ const AddTrainingInfo = () => {
           </tbody>
         </Table>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

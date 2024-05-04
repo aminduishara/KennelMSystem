@@ -1,8 +1,13 @@
-import React, {useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
+import { useUser } from './../UserContext';
+import { useLocation } from 'react-router-dom';
 
 const AddDutyInfo = () => {
+  const location = useLocation();
+  const regNo = location.state.regNo;
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     date: '',
@@ -11,7 +16,8 @@ const AddDutyInfo = () => {
     result: 'success',
     description: '',
   });
-  
+  const { userId } = useUser();
+
   const [dutyList, setDutyList] = useState([]);
   const [editableIndex, setEditableIndex] = useState(null);
 
@@ -25,17 +31,35 @@ const AddDutyInfo = () => {
     setDutyList(updatedDutyList);
   };
 
-  const handleAddDutyInfo = () => {
-    const newDuty = { ...formData };
-    setDutyList([...dutyList, newDuty]);
-    setFormData({
-      date: '',
-      time: '',
-      dutyPlace: '',
-      result: 'success',
-      description: '',
-    });
-    handleCloseModal();
+  const handleAddDutyInfo = async () => {
+    if (!formData || !formData.date || !formData.time || !formData.dutyPlace || !formData.result || !formData.description) {
+      alert('Please fill all the data');
+      return;
+    }
+    const newDuty = { ...formData, regNo };
+    try {
+      const response = await axios.post('/addDuty', newDuty);
+
+      if (response.status === 200 && response.data) {
+        const newDuty = { ...formData };
+        setDutyList([...dutyList, newDuty]);
+        setFormData({
+          date: '',
+          time: '',
+          dutyPlace: '',
+          result: 'success',
+          description: '',
+        });
+        handleCloseModal();
+      } else {
+        console.error('Error adding duty:', response.data.message);
+        alert('Failed to adding duty. Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error adding duty:', error);
+      alert('An error occurred while adding duty. Please try again later.'); // Display user-friendly message
+    }
   };
 
   const handleEditRow = (index) => {
@@ -44,6 +68,39 @@ const AddDutyInfo = () => {
 
   const handleSaveRow = () => {
     setEditableIndex(null);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getDuty?reg=' + regNo);
+        if (response.data) {
+          const modifiedData = response.data.map(item => ({
+            date: formatDate(item.dutyDate), // Rename dutyData to date
+            time: item.dutyTime, // Rename dutyTime to time
+            ...item
+          }));
+          setDutyList(modifiedData);
+        }
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData();
+
+  }, [])
+
+  // Format date to 'Y-m-d' (Year-Month-Day) format
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    let month = (1 + formattedDate.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month; // Add leading zero if month is single digit
+    let day = formattedDate.getDate().toString();
+    day = day.length > 1 ? day : '0' + day; // Add leading zero if day is single digit
+    return year + '-' + month + '-' + day;
   };
 
   return (
@@ -113,7 +170,7 @@ const AddDutyInfo = () => {
               <tr key={index}>
                 <td>{editableIndex === index ? <Form.Control type="date" value={duty.date} name="date" onChange={(e) => handleChange(e, index)} /> : duty.date}</td>
                 <td>{editableIndex === index ? <Form.Control type="time" value={duty.time} name="time" onChange={(e) => handleChange(e, index)} /> : duty.time}</td>
-                
+
                 <td>{editableIndex === index ? <Form.Control type="text" value={duty.dutyPlace} name="dutyPlace" onChange={(e) => handleChange(e, index)} /> : duty.dutyPlace}</td>
                 <td>{editableIndex === index ? <Form.Control as="select" value={duty.result} name="result" onChange={(e) => handleChange(e, index)}><option value="success">Success</option><option value="unsuccessful">Unsuccessful</option><option value="in progress">In Progress</option></Form.Control> : duty.result}</td>
                 <td>{editableIndex === index ? <Form.Control as="textarea" rows={3} value={duty.description} name="description" onChange={(e) => handleChange(e, index)} /> : duty.description}</td>

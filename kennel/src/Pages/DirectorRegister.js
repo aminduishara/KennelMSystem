@@ -29,6 +29,10 @@ const DirectorRegister = () => {
         setEmail(event.target.value);
     };
 
+    const handleLogin = () => {
+        navigate('/Pages/DirectorLogin');
+    }
+
     const handleClearForm = () => {
         setUsername('');
         setPassword('');
@@ -77,70 +81,66 @@ const DirectorRegister = () => {
 
 
     return (
-        <Container className="mt-5">
-            <h2 className="text-center mb-4">Director Registration</h2>
-            <Row className="justify-content-md-center">
-                <Col md={6}>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group controlId="formUsername">
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter username"
-                                value={username}
-                                onChange={handleUsernameChange}
-                                required
-                                className="mb-3"
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Enter password"
-                                value={password}
-                                onChange={handlePasswordChange}
-                                required
-                                className="mb-3"
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formRepeatPassword">
-                            <Form.Label>Repeat Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Repeat password"
-                                value={repeatPassword}
-                                onChange={handleRepeatPasswordChange}
-                                required
-                                className="mb-3"
-                            />
-                        </Form.Group>
-
-                        <Form.Group controlId="formEmail">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                required
-                                className="mb-4"
-                            />
-                        </Form.Group>
-
-                        <Button variant="primary" type="submit" className="mr-2" >
-                            Register
-                        </Button>
-                        <Button variant="secondary" onClick={handleClearForm} className='custom-clear-btn-directorRegister'>
-                            Clear
-                        </Button>
-                    </Form>
-                </Col>
-            </Row>
-            <Footer />
-        </Container>
+        <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh' }}>
+            <div className="container">
+                <div className="card border-light-subtle shadow-sm">
+                    <div className="row g-0">
+                        <div className="col-12 col-md-6 text-bg-primary">
+                            <div className="d-flex align-items-center justify-content-center h-100">
+                                <div className="col-10 col-xl-8 py-3">
+                                    <h2 className="h1 mb-4">Kennel Management System</h2>
+                                    <p className="lead m-0">Ensuring the safety and welfare of our canine companions is paramount.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12 col-md-6">
+                            <div className="card-body p-3 p-md-4 p-xl-5">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="mb-5">
+                                            <h3>Register</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form action="#!" onSubmit={handleSubmit}>
+                                    <div className="row gy-3 gy-md-4 overflow-hidden">
+                                        <div className="col-12">
+                                            <label htmlFor="username" className="form-label">Username <span className="text-danger">*</span></label>
+                                            <input type="text" className="form-control" name="username" id="username" placeholder="Username" value={username} onChange={handleUsernameChange} required />
+                                        </div>
+                                        <div className="col-12">
+                                            <label htmlFor="password" className="form-label">Password <span className="text-danger">*</span></label>
+                                            <input type="password" className="form-control" name="password" id="password" placeholder='Password' value={password} onChange={handlePasswordChange} required />
+                                        </div>
+                                        <div className="col-12">
+                                            <label htmlFor="confirmPassword" className="form-label">Confirm Password <span className="text-danger">*</span></label>
+                                            <input type="password" className="form-control" name="confirmPassword" id="confirmPassword" placeholder='Confirm Password' value={repeatPassword} onChange={handleRepeatPasswordChange} required />
+                                        </div>
+                                        <div className="col-12">
+                                            <label htmlFor="Email" className="form-label">Email <span className="text-danger">*</span></label>
+                                            <input type="email" className="form-control" name="email" id="email" placeholder="Email" value={email} onChange={handleEmailChange} required />
+                                        </div>
+                                        <div className="col-12">
+                                            <div className="d-grid">
+                                                <button className="btn bsb-btn-xl btn-primary" type="submit">Register now</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <hr className="mt-5 mb-4 border-secondary-subtle" />
+                                        <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
+                                            <a href="#!" className="link-secondary text-decoration-none" onClick={handleLogin}>Log in now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 

@@ -99,7 +99,6 @@ function handleGetUser(req, res) {
 
 function handleGetSingleUser(req, res) {
     const { userId } = req.query;
-    console.log(userId);
     getSingleUser(userId, (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Internal server error' });

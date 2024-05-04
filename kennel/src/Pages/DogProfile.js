@@ -1,28 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
+import { useUser } from './../UserContext';
 
-const DogProfile = (props) => {
-    const formData = props.formData;
+const DogProfile = () => {
 
-    const dummyData = {
-        name: 'Buddy',
-        breed: 'Bullmastif',
-        gender: 'Male',
-        source: 'Local',
-        registeredDate: '2022-01-01',
-        subject: 'Criminal',
-        mealType: 'Meat',
-        handlerName: 'K.Y Perera',
-        registrationNumber: 'DOG123',  // Dummy registration number
-    };
-
-    // Merge formData with dummyData if formData is not provided
-    const dogData = formData || dummyData;
-
-    const [selectedSickType, setSelectedSickType] = useState('Select health status');
-    const [selectedDutyType, setSelectedDutyType] = useState('Select duty status');
+    const [selectedSickType, setSelectedSickType] = useState();
+    const [selectedDutyType, setSelectedDutyType] = useState();
+    const [dogData, setDogData] = useState([]);
+    const { userId } = useUser();
 
     const handleDutyTypeSelect = (eventKey) => {
         setSelectedDutyType(eventKey);
@@ -30,12 +18,12 @@ const DogProfile = (props) => {
 
     const handleAddDutyInfo = () => {
         // Navigate to AddDutyInfo page when the button is clicked
-        navigate('/Pages/AddDutyInfo');
+        navigate('/Pages/AddDutyInfo', { state: { regNo: dogData.regNo } });
     };
 
     const handleAddTrainingInfo = () => {
         // Navigate to AddTrainingInfo page when the button is clicked
-        navigate('/Pages/AddTrainingInfo');
+        navigate('/Pages/AddTrainingInfo', { state: { regNo: dogData.regNo } });
     };
 
     const handleAddBreedingInfo = () => {
@@ -47,7 +35,60 @@ const DogProfile = (props) => {
         setSelectedSickType(eventKey);
     };
 
+    useEffect(() => {
+        handleUpdateStatus();
+    }, [selectedSickType, selectedDutyType]);
+
+    const handleUpdateStatus = async () => {
+        if (!userId || !selectedSickType || !selectedDutyType) {
+            return;
+        }
+        const formData = {
+            "id": userId,
+            "healthStatus": selectedSickType,
+            "dutyStatus": selectedDutyType,
+        };
+        try {
+            const response = await axios.post('/updateDog', formData);
+        } catch (error) {
+            console.error('Error update dog:', error);
+            alert('An error occurred while update dog. Please try again later.'); // Display user-friendly message
+        }
+    }
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/getDogInfo?pet=' + userId);
+                console.log(response.data);
+                if (Array.isArray(response.data) && response.data.length === 0) {
+                    navigate('/Pages/DogAccountCreate');
+                }
+                setDogData(response.data[0]);
+                setSelectedDutyType(response.data[0].dutyStatus);
+                setSelectedSickType(response.data[0].healthStatus);
+            } catch (error) {
+                console.error('Error retrieving Users:', error);
+                alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+            }
+        };
+
+        fetchData();
+
+    }, [])
+
+    // Format date to 'Y-m-d' (Year-Month-Day) format
+    const formatDate = (date) => {
+        const formattedDate = new Date(date);
+        const year = formattedDate.getFullYear();
+        let month = (1 + formattedDate.getMonth()).toString();
+        month = month.length > 1 ? month : '0' + month; // Add leading zero if month is single digit
+        let day = formattedDate.getDate().toString();
+        day = day.length > 1 ? day : '0' + day; // Add leading zero if day is single digit
+        return year + '-' + month + '-' + day;
+    };
+
 
     return (
         <div className="container-lg">
@@ -55,20 +96,60 @@ const DogProfile = (props) => {
             <div className="row">
                 <div className="col-md-8">
                     <div className="card">
-                        <div className="card-body text-center">
-                            <p><strong>Breed:</strong> {dogData.breed}</p>
-                            <p><strong>Gender:</strong> {dogData.gender}</p>
-                            <p><strong>Source:</strong> {dogData.source}</p>
-                            <p><strong>Registered Date:</strong> {dogData.registeredDate}</p>
-                            <p><strong>Subject:</strong> {dogData.subject}</p>
-                            <p><strong>Meal Type:</strong> {dogData.mealType}</p>
-                            <p><strong>Handler Name:</strong> {dogData.handlerName}</p>
-                            
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Breed:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {dogData.breedId}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Gender:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {dogData.gender}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Source:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {dogData.sourceId}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Registered Date:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {formatDate(dogData.registeredDate)}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Subject:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {dogData.subjectId}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-end">
+                                    <strong>Birth Date:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {formatDate(dogData.birthday)}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="mt-4">
                         <DropdownButton id="duty-dropdown" title={selectedDutyType} onSelect={handleDutyTypeSelect}>
-                            <Dropdown.Item eventKey="InDuty">In duty</Dropdown.Item>
+                            <Dropdown.Item eventKey="InDuty" selected>In duty</Dropdown.Item>
                             <Dropdown.Item eventKey="Training">Training</Dropdown.Item>
                             <Dropdown.Item eventKey="Retired">Retired</Dropdown.Item>
                         </DropdownButton>
@@ -79,16 +160,16 @@ const DogProfile = (props) => {
                         <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
                             <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
                             <Dropdown.Item eventKey="Dead">Dead</Dropdown.Item>
-                            <Dropdown.Item eventKey="Normal">Normal</Dropdown.Item>
+                            <Dropdown.Item eventKey="Normal" selected>Normal</Dropdown.Item>
                         </DropdownButton>
                         <img
-                            src="/Images/Bullmustif.jpeg"
+                            src={process.env.REACT_APP_API_URL + "/" + dogData.imagePath}
                             className="img-fluid rounded-circle mt-3"
                             style={{ width: '150px', height: '150px' }}
                             alt="Dog Avatar"
                         />
                         <p className="mt-3">Name: <strong>{dogData.name}</strong></p>
-                        <p>Registration Number: <strong>{dogData.registrationNumber}</strong></p>
+                        <p>Registration Number: <strong>{dogData.regNo}</strong></p>
                     </div>
                     <div className="d-flex flex-column gap-3 mt-4">
                         <button type="button" className="btn btn-outline-primary btn-lg w-100" onClick={handleAddDutyInfo}>
