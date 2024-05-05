@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
+
 import { useNavigate } from 'react-router-dom';
-import Footer from '../Components/Footer';
+
 import axios from './../axiosConfig';
 import LoginFailedModal from '../Components/LoginFailedModal';
 import { useUser } from './../UserContext';
@@ -66,14 +66,14 @@ const DirectorLogin = () => {
   };
 
   return (
-    <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh' }}>
+    <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh',backgroundColor:'silver' }}>
       <div className="container">
         <div className="card border-light-subtle shadow-sm">
           <div className="row g-0">
             <div className="col-12 col-md-6 text-bg-primary">
               <div className="d-flex align-items-center justify-content-center h-100">
                 <div className="col-10 col-xl-8 py-3">
-                  <h2 className="h1 mb-4">Kennel Management System</h2>
+                  <h2 className="h1 mb-4">Welcome to Kennel Management System</h2>
                   <p className="lead m-0">Ensuring the safety and welfare of our canine companions is paramount.</p>
                 </div>
               </div>
