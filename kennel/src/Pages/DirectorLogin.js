@@ -83,7 +83,7 @@ const DirectorLogin = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="mb-5">
-                      <h3>Log in</h3>
+                    <h3 className="fw-bold fs-2">Log in</h3>
                     </div>
                   </div>
                 </div>
@@ -115,9 +115,9 @@ const DirectorLogin = () => {
                 <div className="row">
                   <div className="col-12">
                     <hr className="mt-5 mb-4 border-secondary-subtle" />
-                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                      <a href="#!" className="link-secondary text-decoration-none" onClick={handleRegisterClick}>Create new account</a>
-                      <a href="#!" className="link-secondary text-decoration-none">Forgot password</a>
+                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-start">
+                      <a href="#!" className="link-primary fw-bold text-decoration-none" onClick={handleRegisterClick}>Create new account</a>
+                      <a href="#!" className="link-secondary fw-bold text-decoration-none">Forgot password</a>
                     </div>
                   </div>
                 </div>
