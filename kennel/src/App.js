@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import WelcomePage from "./Pages/WelcomePage";
+
 import HandlerVetOICLogin from './Components/HandlerVetOICLogin';
 
 import DirectorRegister from './Pages/DirectorRegister';
