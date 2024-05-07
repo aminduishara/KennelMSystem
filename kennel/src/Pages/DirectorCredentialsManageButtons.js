@@ -23,25 +23,25 @@ const DirectorCredentialManagesButtons = () => {
   return (
     <div style={{ backgroundColor: '#ADD8E6'}}>
       <h1 className='text-center'>Director Credentials Manage</h1>
-      <div className="container d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+      <div className="container d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
         <div className="text-center mb-4"></div>
         <div className="mb-3">
-          <Button variant="primary fw-bold" size="lg" style={{ width: '320px' }} onClick={handleHandlerCredentials}>
+          <Button variant="primary fw-bold" size="lg" style={{ width: '370px' ,height:'100px'}} onClick={handleHandlerCredentials}>
            Handler credentials
           </Button>
         </div>
         <div className="mb-3">
-          <Button variant="primary fw-bold" size="lg" style={{ width: '320px' }} onClick={handleOicCredentials} >
+          <Button variant="primary fw-bold" size="lg" style={{ width: '370px',height:'100px' }} onClick={handleOicCredentials} >
            OIC credentials
           </Button>
         </div>
         <div className="mb-3">
-          <Button variant="primary fw-bold" size="lg" style={{ width: '300px' }} onClick={handleDeputyVetCredentials} >
+          <Button variant="primary fw-bold" size="lg" style={{ width: '370px',height:'100px' }} onClick={handleDeputyVetCredentials} >
            Deputy veterinary credentials
           </Button>
         </div>
         <div className="mb-3">
-          <Button variant="primary fw-bold" size="lg" style={{ width: '300px' }} onClick={handleDirectorCredentials} >
+          <Button variant="primary fw-bold" size="lg" style={{ width: '370px',height:'100px' }} onClick={handleDirectorCredentials} >
            My credentials
           </Button>
         </div>
