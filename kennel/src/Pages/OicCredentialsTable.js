@@ -136,8 +136,8 @@ const OicCredentialsTable = () => {
 
 
   return (
-    <div>
-      <h3 className="text-center">OIC Credentials Table</h3><br />
+    <div style={{ backgroundColor: '#ADD8E6', minHeight: '100vh' }}>
+      <h3 className="text-center fw-bold">OIC Credentials Table</h3><br />
       <Table striped bordered hover>
         <thead>
           <tr>

@@ -45,8 +45,8 @@ const DirectorSearingDogProfiles = () => {
     };
 
     return (
-        <div className="container">
-            <h2 className="mt-3 mb-4">Search Dogs</h2>
+        <div className="container" style={{ backgroundColor: '#ADD8E6' ,minHeight:'100vh'}}>
+            <h2 className="mt-3 mb-4 text-center fw-bold">Searching Dogs</h2>
             <Form className="mb-3">
                 <div className="input-group mb-3">
                     <input

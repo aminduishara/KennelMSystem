@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from './../axiosConfig';
 import LoginFailedModal from '../Components/LoginFailedModal';
 import { useUser } from './../UserContext';
+import 'animate.css/animate.min.css';
+
 
 const DirectorLogin = () => {
   const [username, setUsername] = useState('');
@@ -70,11 +72,11 @@ const DirectorLogin = () => {
       <div className="container">
         <div className="card border-light-subtle shadow-sm">
           <div className="row g-0">
-            <div className="col-12 col-md-6 text-bg-primary">
+          <div className="col-12 col-md-6 text-bg-primary" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("/images/welcomedog.jpeg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <div className="d-flex align-items-center justify-content-center h-100">
                 <div className="col-10 col-xl-8 py-3">
-                  <h2 className="h1 mb-4">Welcome to Kennel Management System</h2>
-                  <p className="lead m-0">Ensuring the safety and welfare of our canine companions is paramount.</p>
+                  <h1 className="h1 mb-4 fw-bold mb-4 animate-slide" style={{ color: 'blue',fontSize: '4rem' }}>Welcome to Kandy Kennels</h1>
+                  <h3 className="fw-bold " style={{ color: 'black',fontStyle: 'italic' }}>"Ensuring the safety and welfare of our canine companions is paramount"</h3>
                 </div>
               </div>
             </div>

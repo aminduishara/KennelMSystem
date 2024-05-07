@@ -51,12 +51,12 @@ const DirectorCredentialsTable = () => {
   }, []);
 
   return (
-    <div className="container">
-      <h3 className="text-center">My Credentials Table</h3><br />
+    <div className="container " style={{ backgroundColor: '#ADD8E', minHeight: '100vh', padding: '20px' }}>
+      <h3 className="text-center fw-bold">My Credentials</h3><br />
       <form onSubmit={handleSubmit}>
         <div className="col-12">
           <div className="row g-3 align-items-center justify-content-center">
-            <div className="col-1">
+            <div className="col-1 fw-bold">
               <label htmlFor="txtUsername">Username</label>
             </div>
             <div className="col-5">
@@ -68,7 +68,7 @@ const DirectorCredentialsTable = () => {
             </div>
           </div>
           <div className="row g-3 align-items-center justify-content-center mt-3">
-            <div className="col-1">
+            <div className="col-1 fw-bold">
               <label htmlFor="txtUsername">Email</label>
             </div>
             <div className="col-5">
@@ -80,7 +80,7 @@ const DirectorCredentialsTable = () => {
             </div>
           </div>
           <div className="row g-3 align-items-center justify-content-center mt-3">
-            <div className="col-1">
+            <div className="col-1 fw-bold">
               <label htmlFor="txtUsername">Password</label>
             </div>
             <div className="col-5">
@@ -92,7 +92,7 @@ const DirectorCredentialsTable = () => {
             </div>
           </div>
           <div className="row g-3 align-items-center justify-content-center mt-3">
-            <div className="col-1">
+            <div className="col-1 fw-bold">
               <label htmlFor="txtUsername">Confirm Password</label>
             </div>
             <div className="col-5">
@@ -104,7 +104,7 @@ const DirectorCredentialsTable = () => {
             </div>
           </div>
           <div className="offset-7 col-2 d-flex justify-content-end mt-3">
-            <button className='btn btn-primary'>Update</button>
+            <button className='btn btn-primary fw-bold'>Update</button>
           </div>
         </div>
       </form>
