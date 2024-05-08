@@ -5,7 +5,7 @@ import axios from './../axiosConfig';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible] = useState(false);
   const [editableId, setEditableId] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
