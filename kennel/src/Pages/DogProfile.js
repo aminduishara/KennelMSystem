@@ -149,38 +149,52 @@ const DogProfile = () => {
                         </div>
                         
                     </div>
-                    <div className="mt-4" > 
-                        <DropdownButton id="duty-dropdown" title={selectedDutyType} onSelect={handleDutyTypeSelect}>
-                            <Dropdown.Item eventKey="InDuty" selected>In duty</Dropdown.Item>
-                            <Dropdown.Item eventKey="Training">Training</Dropdown.Item>
-                            <Dropdown.Item eventKey="Retired">Retired</Dropdown.Item>
-                        </DropdownButton>
-                        <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
-                            <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
-                            <Dropdown.Item eventKey="Dead">Dead</Dropdown.Item>
-                            <Dropdown.Item eventKey="Normal" selected>Normal</Dropdown.Item>
-                        </DropdownButton>
-                    </div>
+                    <div className="mt-4">
+                    <div className="mt-4">
+                    <div className="mt-4">
+    <div className="row justify-content-start align-items-center">
+        <div className="col-auto me-0">
+            <span className="d-block mb-0 fw-bold">Update Duty status:</span>
+        </div>
+        <div className="col-auto me-1">
+            <DropdownButton id="duty-dropdown" title={selectedDutyType} onSelect={handleDutyTypeSelect}>
+                <Dropdown.Item eventKey="InDuty" selected>In duty</Dropdown.Item>
+                <Dropdown.Item eventKey="Training">Training</Dropdown.Item>
+                <Dropdown.Item eventKey="Retired">Retired</Dropdown.Item>
+            </DropdownButton>
+        </div>
+        <div className="col-auto me-0">
+            <span className="d-block mb-0 fw-bold">Update Health status:</span>
+        </div>
+        <div className="col-auto">
+            <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
+                <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
+                <Dropdown.Item eventKey="Dead">Dead</Dropdown.Item>
+                <Dropdown.Item eventKey="Normal" selected>Normal</Dropdown.Item>
+            </DropdownButton>
+        </div>
+    </div>
+</div>
+
+</div>
+
+</div>
+
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-4 ms-auto d-flex flex-column align-items-center" >
                 
-                    <div className="position-relative">
-                        <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
-                            <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
-                            <Dropdown.Item eventKey="Dead">Dead</Dropdown.Item>
-                            <Dropdown.Item eventKey="Normal" selected>Normal</Dropdown.Item>
-                        </DropdownButton>
+                    
                         <img
                             src={process.env.REACT_APP_API_URL + "/" + dogData.imagePath}
-                            className="img-fluid rounded-circle mt-3"
+                            className="img-fluid rounded-circle mt-1"
                             style={{ width: '150px', height: '150px' }}
                             alt="Dog Avatar"
                         />
-                        <p className="mt-3 fw-bold">Name: <strong>{dogData.name}</strong></p>
+                        <p className="mt-4 fw-bold">Name: <strong>{dogData.name}</strong></p>
                         <p className='fw-bold'>Registration Number: <strong>{dogData.regNo}</strong></p>
-                    </div>
+                 
                     
-                    <div className="d-flex flex-column gap-3 mt-4">
+                    <div className="d-flex flex-column gap-4 mt-3">
                         <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddDutyInfo}>
                             Add Duty Information
                         </button>
