@@ -1,4 +1,4 @@
- import React, { useState, useEffect } from 'react';
+ import React, { useState} from 'react';
 import DatePicker from 'react-datepicker';
 //style the date picker
 import 'react-datepicker/dist/react-datepicker.css';
@@ -81,26 +81,27 @@ const DogAccountCreate = () => {
 
   return (
 
-    <div className="container">
+    <div className="container" style={{background:'#728FCE',width:'800px'}}>
+       <h1 className="mb-4 text-center fw-bold">Create an account</h1>
       <div className="formRow row justify-content-center">
         <div className="col-md-6">
           <form onSubmit={handleSubmit} className="form-wrapper mb-20">
 
             <div className="mb-3">
-              <h1>Create an account </h1>
-              <label htmlFor="image" className="form-label">Image:</label>
+              
+              <label htmlFor="image" className="form-label fw-bold">Upload an Image:</label>
               <input type="file" className="form-control-file" id="image" onChange={handleImageChange} />
             </div>
             <div className="mb-3">
-              <label htmlFor="name" className="form-label">Name:</label>
+              <label htmlFor="name" className="form-label fw-bold">Name:</label>
               <input type="text" className="form-control" id="name" value={name} onChange={(event) => setName(event.target.value)} />
             </div>
             <div className="mb-3">
-              <label htmlFor="registrationNumber" className="form-label">Registration Number:</label>
+              <label htmlFor="registrationNumber" className="form-label fw-bold">Registration Number:</label>
               <input type="text" className="form-control" id="registrationNumber" value={registrationNumber} onChange={(event) => setRegistrationNumber(event.target.value)} />
             </div>
             <div className="mb-3">
-              <label htmlFor="breed" className="form-label">Breed:</label>
+              <label htmlFor="breed" className="form-label fw-bold">Breed:</label>
               <select className="form-select" id="breed" value={breed} onChange={(event) => setBreed(event.target.value)}>
                 <option value="">Select breed</option>
                 <option value="breed1">Doberman</option>
@@ -112,7 +113,7 @@ const DogAccountCreate = () => {
               </select>
             </div>
             <div className="mb-3">
-              <label className="form-label">Gender:</label>
+              <label className="form-label fw-bold">Gender:</label>
               <div className="form-check">
                 <input className="form-check-input" type="radio" name="gender" id="male" value="male" checked={gender === 'male'} onChange={(event) => setGender(event.target.value)} />
                 <label className="form-check-label" htmlFor="male">Male</label>
@@ -122,16 +123,16 @@ const DogAccountCreate = () => {
                 <label className="form-check-label" htmlFor="female">Female</label>
               </div>
             </div>
-            <div className="mb-3">
-              <label htmlFor="registeredDate" className="form-label">Registered Date:</label>
+            <div className="mb-3 d-flex align-items-center">
+              <label htmlFor="registeredDate" className="form-label fw-bold me-3">Registered Date:</label>
               <DatePicker selected={registeredDate} onChange={(date) => setRegisteredDate(date)} className="form-control" id="registeredDate" />
             </div>
             <div className="mb-3">
-              <label htmlFor="birthday" className="form-label">Birthday:</label>
+              <label htmlFor="birthday" className="form-label fw-bold me-5">Birthday:</label>
               <DatePicker selected={birthday} onChange={(date) => setBirthday(date)} className="form-control" id="birthday" />
             </div>
             <div className="mb-3">
-              <label htmlFor="subject" className="form-label">Subject:</label>
+              <label htmlFor="subject" className="form-label fw-bold">Subject:</label>
               <select className="form-select" id="subject" value={subject} onChange={(event) => setSubject(event.target.value)}>
                 <option value="">Select subject</option>
                 <option value="subject1">Narcotic</option>
@@ -140,7 +141,7 @@ const DogAccountCreate = () => {
               </select>
             </div>
             <div className="mb-3">
-              <label htmlFor="source" className="form-label">Source:</label>
+              <label htmlFor="source" className="form-label fw-bold">Source:</label>
               <select className="form-select" id="source" value={source} onChange={(event) => setSource(event.target.value)}>
                 <option value="">Select source</option>
                 <option value="source1">Local</option>
@@ -148,7 +149,7 @@ const DogAccountCreate = () => {
                 <option value="source3">Donation</option>
               </select>
             </div>
-            <button type="submit" className="btn btn-primary">Create</button>
+            <button type="submit" className="btn btn-primary fw-bold">Create</button>
           </form>
         </div>
       </div>
