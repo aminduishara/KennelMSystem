@@ -2,7 +2,7 @@
 import DatePicker from 'react-datepicker';
 //style the date picker
 import 'react-datepicker/dist/react-datepicker.css';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import '../App.css'
 import axios from './../axiosConfig';
@@ -123,13 +123,17 @@ const DogAccountCreate = () => {
                 <label className="form-check-label" htmlFor="female">Female</label>
               </div>
             </div>
-            <div className="mb-3 d-flex align-items-center">
-              <label htmlFor="registeredDate" className="form-label fw-bold me-3">Registered Date:</label>
+            <div className="mb-3 ">
+              <label htmlFor="registeredDate" className="form-label fw-bold mb-3">Registered Date:</label>
+              <div className="flex-grow-1">
               <DatePicker selected={registeredDate} onChange={(date) => setRegisteredDate(date)} className="form-control" id="registeredDate" />
+             </div>
             </div>
-            <div className="mb-3">
+            <div className="mb-3 ">
               <label htmlFor="birthday" className="form-label fw-bold me-5">Birthday:</label>
+              <div className="flex-grow-1">
               <DatePicker selected={birthday} onChange={(date) => setBirthday(date)} className="form-control" id="birthday" />
+              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="subject" className="form-label fw-bold">Subject:</label>
