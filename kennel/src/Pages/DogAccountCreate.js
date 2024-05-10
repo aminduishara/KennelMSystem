@@ -103,12 +103,12 @@ const DogAccountCreate = () => {
               <label htmlFor="breed" className="form-label">Breed:</label>
               <select className="form-select" id="breed" value={breed} onChange={(event) => setBreed(event.target.value)}>
                 <option value="">Select breed</option>
-                <option value="breed1">Doberman</option>
-                <option value="breed2">German Shepherd</option>
-                <option value="breed3">Rottweiler</option>
-                <option value="breed4">Cocker Spaniel</option>
-                <option value="breed5">Doberman Pinscher</option>
-                <option value="breed6">Bullmastiff</option>
+                <option value="Doberman">Doberman</option>
+                <option value="GermanShepherd">German Shepherd</option>
+                <option value="Rottweiler">Rottweiler</option>
+                <option value="CockerSpaniel">Cocker Spaniel</option>
+                <option value="DobermanPinscher">Doberman Pinscher</option>
+                <option value="Bullmastiff">Bullmastiff</option>
               </select>
             </div>
             <div className="mb-3">
@@ -134,18 +134,18 @@ const DogAccountCreate = () => {
               <label htmlFor="subject" className="form-label">Subject:</label>
               <select className="form-select" id="subject" value={subject} onChange={(event) => setSubject(event.target.value)}>
                 <option value="">Select subject</option>
-                <option value="subject1">Narcotic</option>
-                <option value="subject2">Explosive</option>
-                <option value="subject3">Criminal</option>
+                <option value="Narcotic">Narcotic</option>
+                <option value="Explosive">Explosive</option>
+                <option value="Criminal">Criminal</option>
               </select>
             </div>
             <div className="mb-3">
               <label htmlFor="source" className="form-label">Source:</label>
               <select className="form-select" id="source" value={source} onChange={(event) => setSource(event.target.value)}>
                 <option value="">Select source</option>
-                <option value="source1">Local</option>
-                <option value="source2">Foreign</option>
-                <option value="source3">Donation</option>
+                <option value="Local">Local</option>
+                <option value="Foreign">Foreign</option>
+                <option value="Donation">Donation</option>
               </select>
             </div>
             <button type="submit" className="btn btn-primary">Create</button>

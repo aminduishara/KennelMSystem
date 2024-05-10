@@ -52,6 +52,11 @@ const DirectorLogin = () => {
           case 'HANDLER':
             navigate('/Pages/DogProfile');
             break;
+          case 'OIC':
+            navigate('/Pages/OicDashboard');
+          case 'VETERINARY':
+            navigate('/Pages/DeputyVetSearchDogs');
+            break;
           default:
             break;
         }
