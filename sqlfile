@@ -1,0 +1,634 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 04, 2024 at 07:31 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `kennel_new`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breed`
+--
+
+CREATE TABLE `breed` (
+  `breedId` int(11) NOT NULL,
+  `breedName` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breeding`
+--
+
+CREATE TABLE `breeding` (
+  `femaleDogRegNo` varchar(20) NOT NULL,
+  `maleDogRegNo` varchar(20) NOT NULL,
+  `noOfBornedPuppies` int(11) DEFAULT NULL,
+  `noOfLivingPuppies` int(11) DEFAULT NULL,
+  `handlerRegNo` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `deputyveterinary`
+--
+
+CREATE TABLE `deputyveterinary` (
+  `deputyVetRegNo` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `rank` varchar(50) NOT NULL,
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `director`
+--
+
+CREATE TABLE `director` (
+  `directorRegNo` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `rank` varchar(50) NOT NULL,
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dogduty`
+--
+
+CREATE TABLE `dogduty` (
+  `dutyNo` varchar(20) NOT NULL,
+  `regNo` varchar(20) NOT NULL,
+  `dutyPlace` varchar(255) NOT NULL,
+  `dutyDate` date NOT NULL,
+  `dutySubject` varchar(255) NOT NULL,
+  `description` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doghealth`
+--
+
+CREATE TABLE `doghealth` (
+  `sickId` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `regNo` varchar(20) NOT NULL,
+  `transactionNo` int(10) NOT NULL,
+  `deputyVetRegNo` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dogmeal`
+--
+
+CREATE TABLE `dogmeal` (
+  `regNo` varchar(20) NOT NULL,
+  `mealId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dogmedicine`
+--
+
+CREATE TABLE `dogmedicine` (
+  `transactionNo` int(10) NOT NULL,
+  `regNo` varchar(20) NOT NULL,
+  `medicineId` int(11) NOT NULL,
+  `givenDate` date NOT NULL,
+  `nextDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dogtraining`
+--
+
+CREATE TABLE `dogtraining` (
+  `regNo` varchar(20) NOT NULL,
+  `trainingId` int(11) NOT NULL,
+  `weakness` varchar(255) DEFAULT NULL,
+  `recommendedDuration` varchar(50) NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dogvaccination`
+--
+
+CREATE TABLE `dogvaccination` (
+  `vaccineId` int(11) NOT NULL,
+  `regNo` varchar(20) NOT NULL,
+  `givenDate` date NOT NULL,
+  `nextDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `handler`
+--
+
+CREATE TABLE `handler` (
+  `handlerRegNo` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `rank` varchar(50) NOT NULL,
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `handlerduty`
+--
+
+CREATE TABLE `handlerduty` (
+  `handlerRegNo` varchar(20) NOT NULL,
+  `dutyNo` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `meal`
+--
+
+CREATE TABLE `meal` (
+  `mealId` int(11) NOT NULL,
+  `mealName` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `medicine`
+--
+
+CREATE TABLE `medicine` (
+  `medicineId` int(11) NOT NULL,
+  `medicineName` varchar(50) NOT NULL,
+  `medicineType` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oic`
+--
+
+CREATE TABLE `oic` (
+  `OICRegNo` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `rank` varchar(50) NOT NULL,
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `policedog`
+--
+
+CREATE TABLE `policedog` (
+  `regNo` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthday` date NOT NULL,
+  `registeredDate` date NOT NULL,
+  `handlerRegNo` varchar(20) DEFAULT NULL,
+  `directorRegNo` varchar(20) DEFAULT NULL,
+  `breedId` int(11) NOT NULL,
+  `mealId` int(11) NOT NULL,
+  `sourceId` int(11) NOT NULL,
+  `subjectId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sick`
+--
+
+CREATE TABLE `sick` (
+  `sickId` int(11) NOT NULL,
+  `sickName` varchar(50) NOT NULL,
+  `sicknessType` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `source`
+--
+
+CREATE TABLE `source` (
+  `sourceId` int(11) NOT NULL,
+  `sourcType` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subject`
+--
+
+CREATE TABLE `subject` (
+  `subjectId` int(11) NOT NULL,
+  `subjectName` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `training`
+--
+
+CREATE TABLE `training` (
+  `trainingId` int(11) NOT NULL,
+  `trainingName` varchar(100) NOT NULL,
+  `trainingSubject` varchar(50) NOT NULL,
+  `environment` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `userId` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(10) NOT NULL,
+  `role` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userId`, `username`, `password`, `role`) VALUES
+(1, 'sisaman3124', '*A4B615731', 'handler');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vaccine`
+--
+
+CREATE TABLE `vaccine` (
+  `vaccineId` int(11) NOT NULL,
+  `vaccineName` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `breed`
+--
+ALTER TABLE `breed`
+  ADD PRIMARY KEY (`breedId`);
+
+--
+-- Indexes for table `breeding`
+--
+ALTER TABLE `breeding`
+  ADD PRIMARY KEY (`femaleDogRegNo`,`maleDogRegNo`),
+  ADD KEY `maleDogRegNo` (`maleDogRegNo`),
+  ADD KEY `handlerRegNo` (`handlerRegNo`);
+
+--
+-- Indexes for table `deputyveterinary`
+--
+ALTER TABLE `deputyveterinary`
+  ADD PRIMARY KEY (`deputyVetRegNo`),
+  ADD KEY `deputyveterinary_ibfk_1` (`userId`);
+
+--
+-- Indexes for table `director`
+--
+ALTER TABLE `director`
+  ADD PRIMARY KEY (`directorRegNo`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `dogduty`
+--
+ALTER TABLE `dogduty`
+  ADD PRIMARY KEY (`dutyNo`),
+  ADD KEY `regNoconstraint_1` (`regNo`);
+
+--
+-- Indexes for table `doghealth`
+--
+ALTER TABLE `doghealth`
+  ADD PRIMARY KEY (`sickId`),
+  ADD KEY `deputyVet` (`deputyVetRegNo`),
+  ADD KEY `regNo` (`regNo`),
+  ADD KEY `transaction` (`transactionNo`);
+
+--
+-- Indexes for table `dogmeal`
+--
+ALTER TABLE `dogmeal`
+  ADD PRIMARY KEY (`regNo`,`mealId`),
+  ADD KEY `mealconstraints` (`mealId`);
+
+--
+-- Indexes for table `dogmedicine`
+--
+ALTER TABLE `dogmedicine`
+  ADD PRIMARY KEY (`transactionNo`),
+  ADD KEY `medicineId` (`medicineId`),
+  ADD KEY `regnoconstr` (`regNo`);
+
+--
+-- Indexes for table `dogtraining`
+--
+ALTER TABLE `dogtraining`
+  ADD PRIMARY KEY (`regNo`,`trainingId`),
+  ADD KEY `dogtraining_ibfk_2` (`trainingId`);
+
+--
+-- Indexes for table `dogvaccination`
+--
+ALTER TABLE `dogvaccination`
+  ADD PRIMARY KEY (`regNo`,`vaccineId`),
+  ADD KEY `vaccineId` (`vaccineId`);
+
+--
+-- Indexes for table `handler`
+--
+ALTER TABLE `handler`
+  ADD PRIMARY KEY (`handlerRegNo`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `handlerduty`
+--
+ALTER TABLE `handlerduty`
+  ADD PRIMARY KEY (`handlerRegNo`,`dutyNo`),
+  ADD KEY `dutyNo` (`dutyNo`);
+
+--
+-- Indexes for table `meal`
+--
+ALTER TABLE `meal`
+  ADD PRIMARY KEY (`mealId`);
+
+--
+-- Indexes for table `medicine`
+--
+ALTER TABLE `medicine`
+  ADD PRIMARY KEY (`medicineId`);
+
+--
+-- Indexes for table `oic`
+--
+ALTER TABLE `oic`
+  ADD PRIMARY KEY (`OICRegNo`),
+  ADD KEY `userId` (`userId`);
+
+--
+-- Indexes for table `policedog`
+--
+ALTER TABLE `policedog`
+  ADD PRIMARY KEY (`regNo`),
+  ADD KEY `handlerRegNo` (`handlerRegNo`),
+  ADD KEY `directorRegNo` (`directorRegNo`),
+  ADD KEY `breedId` (`breedId`),
+  ADD KEY `meal_constraints` (`mealId`),
+  ADD KEY `source_constraints` (`sourceId`),
+  ADD KEY `subject_constraint` (`subjectId`);
+
+--
+-- Indexes for table `sick`
+--
+ALTER TABLE `sick`
+  ADD PRIMARY KEY (`sickId`);
+
+--
+-- Indexes for table `source`
+--
+ALTER TABLE `source`
+  ADD PRIMARY KEY (`sourceId`);
+
+--
+-- Indexes for table `subject`
+--
+ALTER TABLE `subject`
+  ADD PRIMARY KEY (`subjectId`);
+
+--
+-- Indexes for table `training`
+--
+ALTER TABLE `training`
+  ADD PRIMARY KEY (`trainingId`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`userId`);
+
+--
+-- Indexes for table `vaccine`
+--
+ALTER TABLE `vaccine`
+  ADD PRIMARY KEY (`vaccineId`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `breed`
+--
+ALTER TABLE `breed`
+  MODIFY `breedId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `doghealth`
+--
+ALTER TABLE `doghealth`
+  MODIFY `sickId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `meal`
+--
+ALTER TABLE `meal`
+  MODIFY `mealId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `medicine`
+--
+ALTER TABLE `medicine`
+  MODIFY `medicineId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `sick`
+--
+ALTER TABLE `sick`
+  MODIFY `sickId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `source`
+--
+ALTER TABLE `source`
+  MODIFY `sourceId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subject`
+--
+ALTER TABLE `subject`
+  MODIFY `subjectId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `training`
+--
+ALTER TABLE `training`
+  MODIFY `trainingId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `vaccine`
+--
+ALTER TABLE `vaccine`
+  MODIFY `vaccineId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `breeding`
+--
+ALTER TABLE `breeding`
+  ADD CONSTRAINT `breeding_ibfk_1` FOREIGN KEY (`femaleDogRegNo`) REFERENCES `policedog` (`regNo`),
+  ADD CONSTRAINT `breeding_ibfk_2` FOREIGN KEY (`maleDogRegNo`) REFERENCES `policedog` (`regNo`),
+  ADD CONSTRAINT `breeding_ibfk_3` FOREIGN KEY (`handlerRegNo`) REFERENCES `handler` (`handlerRegNo`);
+
+--
+-- Constraints for table `deputyveterinary`
+--
+ALTER TABLE `deputyveterinary`
+  ADD CONSTRAINT `deputyveterinary_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `director`
+--
+ALTER TABLE `director`
+  ADD CONSTRAINT `director_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
+
+--
+-- Constraints for table `dogduty`
+--
+ALTER TABLE `dogduty`
+  ADD CONSTRAINT `regNoconstraint_1` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`);
+
+--
+-- Constraints for table `doghealth`
+--
+ALTER TABLE `doghealth`
+  ADD CONSTRAINT `deputyVet` FOREIGN KEY (`deputyVetRegNo`) REFERENCES `deputyveterinary` (`deputyVetRegNo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `regNo` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`),
+  ADD CONSTRAINT `transaction` FOREIGN KEY (`transactionNo`) REFERENCES `dogmedicine` (`transactionNo`);
+
+--
+-- Constraints for table `dogmeal`
+--
+ALTER TABLE `dogmeal`
+  ADD CONSTRAINT `mealconstraints` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
+  ADD CONSTRAINT `regNoconstraint` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`);
+
+--
+-- Constraints for table `dogmedicine`
+--
+ALTER TABLE `dogmedicine`
+  ADD CONSTRAINT `regnoconstr` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`);
+
+--
+-- Constraints for table `dogtraining`
+--
+ALTER TABLE `dogtraining`
+  ADD CONSTRAINT `dogtraining_ibfk_1` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`),
+  ADD CONSTRAINT `dogtraining_ibfk_2` FOREIGN KEY (`trainingId`) REFERENCES `training` (`trainingId`);
+
+--
+-- Constraints for table `dogvaccination`
+--
+ALTER TABLE `dogvaccination`
+  ADD CONSTRAINT `dogvaccination_ibfk_1` FOREIGN KEY (`regNo`) REFERENCES `policedog` (`regNo`);
+
+--
+-- Constraints for table `handler`
+--
+ALTER TABLE `handler`
+  ADD CONSTRAINT `handler_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
+
+--
+-- Constraints for table `handlerduty`
+--
+ALTER TABLE `handlerduty`
+  ADD CONSTRAINT `handlerduty_ibfk_1` FOREIGN KEY (`handlerRegNo`) REFERENCES `handler` (`handlerRegNo`),
+  ADD CONSTRAINT `handlerduty_ibfk_2` FOREIGN KEY (`dutyNo`) REFERENCES `dogduty` (`dutyNo`);
+
+--
+-- Constraints for table `oic`
+--
+ALTER TABLE `oic`
+  ADD CONSTRAINT `oic_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
+
+--
+-- Constraints for table `policedog`
+--
+ALTER TABLE `policedog`
+  ADD CONSTRAINT `breed_constraint` FOREIGN KEY (`breedId`) REFERENCES `breed` (`breedId`),
+  ADD CONSTRAINT `meal_constraints` FOREIGN KEY (`mealId`) REFERENCES `meal` (`mealId`),
+  ADD CONSTRAINT `policedog_ibfk_1` FOREIGN KEY (`handlerRegNo`) REFERENCES `handler` (`handlerRegNo`),
+  ADD CONSTRAINT `policedog_ibfk_2` FOREIGN KEY (`directorRegNo`) REFERENCES `director` (`directorRegNo`),
+  ADD CONSTRAINT `source_constraints` FOREIGN KEY (`sourceId`) REFERENCES `source` (`sourceId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `subject_constraint` FOREIGN KEY (`subjectId`) REFERENCES `subject` (`subjectId`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
