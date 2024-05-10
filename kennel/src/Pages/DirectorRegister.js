@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-import Footer from '../Components/Footer';
+
 import '../App.css';
 import axios from './../axiosConfig';
 
@@ -81,8 +81,8 @@ const DirectorRegister = () => {
 
 
     return (
-        <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh' }}>
-            <div className="container">
+        <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '80dvh' ,backgroundColor:'silver'}}>
+            <div className="container" style={{ marginTop: '120px' }}>
                 <div className="card border-light-subtle shadow-sm">
                     <div className="row g-0">
                         <div className="col-12 col-md-6 text-bg-primary">
@@ -98,7 +98,7 @@ const DirectorRegister = () => {
                                 <div className="row">
                                     <div className="col-12">
                                         <div className="mb-5">
-                                            <h3>Register</h3>
+                                            <h3 className="fw-bold fs-2">Director Register</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -130,8 +130,8 @@ const DirectorRegister = () => {
                                 <div className="row">
                                     <div className="col-12">
                                         <hr className="mt-5 mb-4 border-secondary-subtle" />
-                                        <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                                            <a href="#!" className="link-secondary text-decoration-none" onClick={handleLogin}>Log in now</a>
+                                        <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-start">
+                                            <a href="#!" className="link-primary fw-bold text-decoration-none" onClick={handleLogin}>Log in now</a>
                                         </div>
                                     </div>
                                 </div>

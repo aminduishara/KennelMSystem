@@ -5,7 +5,7 @@ import axios from './../axiosConfig';
 
 const HandlerCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible] = useState(false);
   const [editableId, setEditableId] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -159,8 +159,9 @@ const HandlerCredentialsTable = () => {
   const rankOptions = ['Constable', 'Sergeant', 'SI']; // Add your rank options here
 
   return (
-    <div>
-      <h3 className="text-center">Handler Credentials Table</h3>
+    
+    <div style={{ backgroundColor: '#ADD8E6', minHeight: '100vh' }} >
+      <h3 className="text-center fw-bold">Handler Credentials Table</h3>
       <br />
       <Table striped bordered hover>
         <thead>
@@ -325,6 +326,7 @@ const HandlerCredentialsTable = () => {
       </Table>
       <Footer />
     </div>
+    
   );
 };
 

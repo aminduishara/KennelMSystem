@@ -14,17 +14,17 @@ const DirectorDashboard = () => {
   }
 
   return (
-    <div>
-      <h1 className='text-center'>Director Dashboard</h1>
-      <div className="container d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#ADD8E6' }}>
+      <h1 className='text-center fw-bold'  >Director Dashboard</h1>
+      <div className="container d-flex flex-column justify-content-center align-items-center" style={{ minHeight: '90vh' }}>
         <div className="text-center mb-4"></div>
         <div className="mb-3">
-          <Button variant="primary" size="lg" style={{ width: '300px' }} onClick={handleViewDogProfiles}>
+          <Button variant="primary fw-bold" size="lg" style={{ width: '320px', height:'100px',marginBottom:'150px' }} onClick={handleViewDogProfiles}>
             View Dog profiles
           </Button>
         </div>
         <div className="mb-3">
-          <Button variant="primary" size="lg" style={{ width: '300px' }} onClick={handleManageCredentials} >
+          <Button variant="primary fw-bold" size="lg" style={{ width: '320px',height:'100px' }} onClick={handleManageCredentials} >
             Manage credentials
           </Button>
         </div>

@@ -160,8 +160,8 @@ const DeputyVetCredentialsTable = () => {
   const rankOptions = ['ASP', 'SP', 'SSP']; // Add your rank options here
 
   return (
-    <div>
-      <h3 className="text-center">Deputy Veterinary Credentials Table</h3>
+    <div style={{ backgroundColor: '#ADD8E6', minHeight: '100vh' }}>
+      <h3 className="text-center fw-bold">Deputy Veterinary Credentials Table</h3>
       <br />
       <Table striped bordered hover>
         <thead>

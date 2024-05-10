@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { MDBInput, MDBCheckbox } from 'mdb-react-ui-kit';
+
 import { useNavigate } from 'react-router-dom';
-import Footer from '../Components/Footer';
+
 import axios from './../axiosConfig';
 import LoginFailedModal from '../Components/LoginFailedModal';
 import { useUser } from './../UserContext';
+import 'animate.css/animate.min.css';
+
 
 const DirectorLogin = () => {
   const [username, setUsername] = useState('');
@@ -71,15 +73,15 @@ const DirectorLogin = () => {
   };
 
   return (
-    <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh' }}>
+    <div className="p-3 p-md-4 p-xl-5 d-flex align-items-center" style={{ height: '100dvh',backgroundColor:'silver' }}>
       <div className="container">
         <div className="card border-light-subtle shadow-sm">
           <div className="row g-0">
-            <div className="col-12 col-md-6 text-bg-primary">
+          <div className="col-12 col-md-6 text-bg-primary" style={{ backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url("/images/welcomedog.jpeg")', backgroundSize: 'cover', backgroundPosition: 'center' }}>
               <div className="d-flex align-items-center justify-content-center h-100">
                 <div className="col-10 col-xl-8 py-3">
-                  <h2 className="h1 mb-4">Kennel Management System</h2>
-                  <p className="lead m-0">Ensuring the safety and welfare of our canine companions is paramount.</p>
+                  <h1 className="h1 mb-4 fw-bold mb-4 animate-slide" style={{ color: 'blue',fontSize: '4rem' }}>Welcome to Kandy Kennels</h1>
+                  <h3 className="fw-bold " style={{ color: 'black',fontStyle: 'italic' }}>"Ensuring the safety and welfare of our canine companions is paramount"</h3>
                 </div>
               </div>
             </div>
@@ -88,7 +90,7 @@ const DirectorLogin = () => {
                 <div className="row">
                   <div className="col-12">
                     <div className="mb-5">
-                      <h3>Log in</h3>
+                    <h3 className="fw-bold fs-2">Log in</h3>
                     </div>
                   </div>
                 </div>
@@ -120,9 +122,9 @@ const DirectorLogin = () => {
                 <div className="row">
                   <div className="col-12">
                     <hr className="mt-5 mb-4 border-secondary-subtle" />
-                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-md-end">
-                      <a href="#!" className="link-secondary text-decoration-none" onClick={handleRegisterClick}>Create new account</a>
-                      <a href="#!" className="link-secondary text-decoration-none">Forgot password</a>
+                    <div className="d-flex gap-2 gap-md-4 flex-column flex-md-row justify-content-start">
+                      <a href="#!" className="link-primary fw-bold text-decoration-none" onClick={handleRegisterClick}>Create new account</a>
+                      <a href="#!" className="link-secondary fw-bold text-decoration-none">Forgot password</a>
                     </div>
                   </div>
                 </div>

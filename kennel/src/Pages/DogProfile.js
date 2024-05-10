@@ -91,13 +91,14 @@ const DogProfile = () => {
 
 
     return (
-        <div className="container-lg">
-            <h1 className="mb-4">Handler Dashboard</h1>
-            <div className="row">
+        <div className="container-lg" >
+            <h1 className="mb-4 text-center fw-bold">Handler Profile</h1>
+            <div className="row" >
                 <div className="col-md-8">
-                    <div className="card">
-                        <div class="card-body">
-                            <div class="row">
+                    <div className="card" style={{width:'550px'}}>
+                        <div class="card-body"  style={{background:'#728FCE'}} >
+                        
+                            <div class="row GX-2 mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Breed:</strong>
                                 </div>
@@ -105,7 +106,7 @@ const DogProfile = () => {
                                     {dogData.breedId}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Gender:</strong>
                                 </div>
@@ -113,7 +114,7 @@ const DogProfile = () => {
                                     {dogData.gender}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Source:</strong>
                                 </div>
@@ -121,7 +122,7 @@ const DogProfile = () => {
                                     {dogData.sourceId}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Registered Date:</strong>
                                 </div>
@@ -129,7 +130,7 @@ const DogProfile = () => {
                                     {formatDate(dogData.registeredDate)}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Subject:</strong>
                                 </div>
@@ -137,7 +138,7 @@ const DogProfile = () => {
                                     {dogData.subjectId}
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col-6 text-end">
                                     <strong>Birth Date:</strong>
                                 </div>
@@ -146,16 +147,23 @@ const DogProfile = () => {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4" > 
                         <DropdownButton id="duty-dropdown" title={selectedDutyType} onSelect={handleDutyTypeSelect}>
                             <Dropdown.Item eventKey="InDuty" selected>In duty</Dropdown.Item>
                             <Dropdown.Item eventKey="Training">Training</Dropdown.Item>
                             <Dropdown.Item eventKey="Retired">Retired</Dropdown.Item>
                         </DropdownButton>
+                        <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
+                            <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
+                            <Dropdown.Item eventKey="Dead">Dead</Dropdown.Item>
+                            <Dropdown.Item eventKey="Normal" selected>Normal</Dropdown.Item>
+                        </DropdownButton>
                     </div>
                 </div>
                 <div className="col-md-4">
+                
                     <div className="position-relative">
                         <DropdownButton id="sick-dropdown" title={selectedSickType} onSelect={handleSickTypeSelect}>
                             <Dropdown.Item eventKey="Sick">Sick</Dropdown.Item>
@@ -168,14 +176,15 @@ const DogProfile = () => {
                             style={{ width: '150px', height: '150px' }}
                             alt="Dog Avatar"
                         />
-                        <p className="mt-3">Name: <strong>{dogData.name}</strong></p>
-                        <p>Registration Number: <strong>{dogData.regNo}</strong></p>
+                        <p className="mt-3 fw-bold">Name: <strong>{dogData.name}</strong></p>
+                        <p className='fw-bold'>Registration Number: <strong>{dogData.regNo}</strong></p>
                     </div>
+                    
                     <div className="d-flex flex-column gap-3 mt-4">
-                        <button type="button" className="btn btn-outline-primary btn-lg w-100" onClick={handleAddDutyInfo}>
+                        <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddDutyInfo}>
                             Add Duty Information
                         </button>
-                        <button type="button" className="btn btn-outline-primary btn-lg w-100" onClick={handleAddTrainingInfo}>
+                        <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddTrainingInfo}>
                             Add Training Information
                         </button>
                         {dogData.gender === 'female' && (
