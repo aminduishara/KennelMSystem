@@ -28,7 +28,7 @@ const DogProfile = () => {
 
     const handleAddBreedingInfo = () => {
         // Navigate to AddBreedingInfo page when the button is clicked
-        navigate('/Pages/AddBreedingInfo');
+        navigate('/Pages/AddBreedingInfo', { state: { regNo: dogData.regNo } });
     };
 
     const handleSickTypeSelect = (eventKey) => {
@@ -201,9 +201,11 @@ const DogProfile = () => {
                         <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddTrainingInfo}>
                             Add Training Information
                         </button>
-                        <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddBreedingInfo}>
-                            Add Breeding Information
-                        </button>
+                        {dogData.gender === 'female' && (
+                            <button type="button" className="btn btn-outline-primary btn-lg w-100" onClick={handleAddBreedingInfo}>
+                                Add Breeding Information
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>
