@@ -106,4 +106,32 @@ function trainingInfoHandler(reg, callback) {
     });
 }
 
-module.exports = { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler };
+function addBreedingHandler(date, regNo, maleDogName, maleDogRegistrationNumber, numberOfPuppiesBorn, numberOfPuppiesLiving, description, callback) {
+    const sql = "INSERT INTO dogbreeding (`regNo`, `date`, `maleDogName`, `maleDogRegistrationNumber`, `numberOfPuppiesBorn`, `numberOfPuppiesLiving`, `description`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    const values = [regNo, date, maleDogName, maleDogRegistrationNumber, numberOfPuppiesBorn, numberOfPuppiesLiving, description];
+
+    pool.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return callback(err, null);
+        }
+        console.log('Data inserted successfully:', data);
+        return callback(null, data);
+    });
+}
+
+function breedingInfoHandler(reg, callback) {
+    const sql = "SELECT * FROM dogbreeding WHERE regNo = ?";
+    const values = [reg];
+
+    pool.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return callback(err, null);
+        }
+        console.log('Data retrieved successfully:', data);
+        return callback(null, data);
+    });
+}
+
+module.exports = { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler, addBreedingHandler, breedingInfoHandler };

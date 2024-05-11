@@ -67,7 +67,7 @@ const App = () => {
                     <Route path="/Pages/AddBreedingInfo" element={<AddBreedingInfo />} />
 
                     <Route path="/Pages/DeputyVetSearchDogs" element={<DeputyVetSearchDogs />} />
-                    <Route path="/Pages/DeputyVetSearchedDogProfile/:accountId" element={<DeputyVetSearchedDogProfile sickType={sickType} />} />
+                    <Route path="/Pages/DeputyVetSearchedDogProfile" element={<DeputyVetSearchedDogProfile />} />
                     <Route path="/Pages/AddHealthInfo" element={<AddHealthInfo />} />
                     <Route path="/Pages/AddVaccinationInfo" element={<AddVaccinationInfo />} />
                     <Route path="/Pages/AddDeathInfo" element={<AddDeathInfo />} />

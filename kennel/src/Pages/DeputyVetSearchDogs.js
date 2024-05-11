@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Form, ListGroup } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../App.css';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
+import { useUser } from './../UserContext';
 
 const DeputyVetSearchDogs = () => {
     const navigate = useNavigate(); // Initialize useNavigate hook
     const [searchQuery, setSearchQuery] = useState('');
     const [dogAccounts, setDogAccounts] = useState([]);
-
-    useEffect(() => {
-        // Fetch dog accounts data from the backend API (replace URL with actual API endpoint)
-        axios.get('https://your-backend-api.com/dog-accounts')
-            .then(response => {
-                setDogAccounts(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching dog accounts:', error);
-            });
-    }, []);
+    const { userId } = useUser();
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -39,15 +30,30 @@ const DeputyVetSearchDogs = () => {
     };
 
     const handleDogAccountClick = (accountId) => {
-        // Navigate to the profile page of the selected dog account
-        // navigate(`/DeputyVetSearchedDogProfile/${accountId}`);
-        navigate(`/Pages/DeputyVetSearchedDogProfile/${accountId}`); // Update the route path
+        navigate('/Pages/DeputyVetSearchedDogProfile', { state: { accountId: accountId } });
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('/getDogs');
+                if (response.data) {
+                    setDogAccounts(response.data);
+                }
+            } catch (error) {
+                console.error('Error retrieving Users:', error);
+                alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+            }
+        };
+
+        fetchData();
+
+    }, [])
 
     return (
         <div className="container">
-            <h2 className="mt-3 mb-4">Search Dogs</h2>
-            <Form className="mb-3">
+            <h2 className="mt-3 mb-4">Dogs List</h2>
+            {/* <Form className="mb-3">
                 <div className="input-group mb-3">
                     <input
                         type="text"
@@ -60,17 +66,17 @@ const DeputyVetSearchDogs = () => {
                         <FontAwesomeIcon icon={faSearch} />
                     </button>
                 </div>
-            </Form>
+            </Form> */}
             <div>
                 {dogAccounts.length === 0 ? (
                     <p>No dog accounts were found.</p>
                 ) : (
                     <ListGroup>
                         {dogAccounts.map(account => (
-                            <ListGroup.Item key={account.id} onClick={() => handleDogAccountClick(account.id)}>
-                                <img src={account.image} alt={account.name} className="mr-3" style={{ width: '100px', height: '100px' }} />
-                                <p className="mb-1">Name: {account.name}</p>
-                                <p className="mb-0">Registration Number: {account.registrationNumber}</p>
+                            <ListGroup.Item key={account.regNo} onClick={() => handleDogAccountClick(account.regNo)} style={{ "display": 'flex', 'gap': '25px', 'cursor': 'pointer' }}>
+                                <img src={process.env.REACT_APP_API_URL + "/" + account.imagePath} alt={account.name} className="mr-3" style={{ width: '100px', height: '100px' }} />
+                                <p className="mb-1"><b>Name:</b> {account.name}</p>
+                                <p className="mb-0"><b>Registration Number:</b> {account.regNo}</p>
                             </ListGroup.Item>
                         ))}
                     </ListGroup>

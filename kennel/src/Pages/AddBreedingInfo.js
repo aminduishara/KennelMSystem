@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
 import Footer from '../Components/Footer';
-
+import axios from './../axiosConfig';
+import { useLocation } from 'react-router-dom';
 
 const AddBreedingInfo = () => {
+  const location = useLocation();
+  const regNo = location.state.regNo;
+
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     date: '',
@@ -27,18 +31,35 @@ const AddBreedingInfo = () => {
     setBreedingList(updatedBreedingList);
   };
 
-  const handleAddBreedingInfo = () => {
-    const newBreeding = { ...formData };
-    setBreedingList([...breedingList, newBreeding]);
-    setFormData({
-      date: '',
-      maleDogName: '',
-      maleDogRegistrationNumber: '',
-      numberOfPuppiesBorn: '',
-      numberOfPuppiesLiving: '',
-      description: '',
-    });
-    handleCloseModal();
+  const handleAddBreedingInfo = async () => {
+    if (!formData || !formData.date || !formData.maleDogName || !formData.maleDogRegistrationNumber || !formData.numberOfPuppiesBorn || !formData.numberOfPuppiesLiving || !formData.description) {
+      alert('Please fill all the data');
+      return;
+    }
+    const newBreeding = { ...formData, regNo };
+    try {
+      const response = await axios.post('/addBreeding', newBreeding);
+
+      if (response.status === 200 && response.data) {
+        setBreedingList([...breedingList, newBreeding]);
+        setFormData({
+          date: '',
+          maleDogName: '',
+          maleDogRegistrationNumber: '',
+          numberOfPuppiesBorn: '',
+          numberOfPuppiesLiving: '',
+          description: '',
+        });
+        handleCloseModal();
+      } else {
+        console.error('Error adding breeding:', response.data.message);
+        alert('Failed to adding breeding. Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error adding breeding:', error);
+      alert('An error occurred while adding breeding. Please try again later.'); // Display user-friendly message
+    }
   };
 
   const handleEditRow = (index) => {
@@ -47,6 +68,43 @@ const AddBreedingInfo = () => {
 
   const handleSaveRow = () => {
     setEditableIndex(null);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getBreeding?reg=' + regNo);
+        if (response.data) {
+          const modifiedData = response.data.map(item => ({
+            ...item,
+            date: formatDate(item.date),
+            maleDogName: item.maleDogName,
+            maleDogRegistrationNumber: item.maleDogRegistrationNumber,
+            numberOfPuppiesBorn: item.numberOfPuppiesBorn,
+            numberOfPuppiesLiving: item.numberOfPuppiesLiving,
+            description: item.description,
+          }));
+          setBreedingList(modifiedData);
+        }
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData();
+
+  }, [])
+
+  // Format date to 'Y-m-d' (Year-Month-Day) format
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    let month = (1 + formattedDate.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month; // Add leading zero if month is single digit
+    let day = formattedDate.getDate().toString();
+    day = day.length > 1 ? day : '0' + day; // Add leading zero if day is single digit
+    return year + '-' + month + '-' + day;
   };
 
   return (
