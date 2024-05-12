@@ -191,7 +191,7 @@ const AddBreedingInfo = () => {
           </tbody>
         </Table>
       </div>
-      <Footer />{/*bnnxmmxjjd */}
+      <Footer />
       
     </div>
   );
