@@ -60,29 +60,30 @@ explosiveInfo: [],
         <div className="col-md-12 text-center">
           {/* Buttons to fetch and display data */}
           <div className="d-inline-block mx-2">
-            <Button className='daily-report-btn' onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
+            <Button className='daily-report-btn fw-bold' onClick={() => updateTemplate(deathInfo)}>Add Death Information</Button>
           </div>
           <div className="d-inline-block mx-2">
-            <Button className='daily-report-btn' onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
+            <Button className='daily-report-btn fw-bold' onClick={() => updateTemplate(sickInfo)}>Add Sick Information</Button>
           </div>
           <div className="d-inline-block mx-2">
-            <Button className='daily-report-btn' onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
+            <Button className='daily-report-btn fw-bold' onClick={() => updateTemplate(criminalInfo)}>Add Criminal Information</Button>
           </div>
           <div className="d-inline-block mx-2">
-            <Button className='daily-report-btn' onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
+            <Button className='daily-report-btn fw-bold' onClick={() => updateTemplate(narcoticInfo)}>Add Narcotic Information</Button>
           </div>
           <div className="d-inline-block mx-2">
-            <Button className='daily-report-btn' onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
+            <Button className='daily-report-btn fw-bold' onClick={() => updateTemplate(explosiveInfo)}>Add Explosive Information</Button>
           </div>
         </div>
       </div>
       <div className="row mt-3">
 
-        <div className="col-md-12" >
+        <div className="col-md-12" style={{background:'#728FCE'}}
+ >
           {/* Template to display daily report */}
-          <h3>Daily Report Template</h3>
-          <div className="border p-3 daily-report-wrapper" >
-            <DailyReport reportData={mockReportData} />
+          <h4 className='fw-bold text-center'>Daily Report Kandy Kennels-Asgiriya</h4>
+          <div className="border p-2 daily-report-wrapper" style={{margin:'30px'}}>
+            <DailyReport reportData={mockReportData} /> {/*calling the Dailyreport component */}
           </div>
         </div>
         </div>
