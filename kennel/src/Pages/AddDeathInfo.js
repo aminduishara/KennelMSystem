@@ -49,7 +49,7 @@ const AddDeathInfo = () => {
   return (
     <div className="container">
       <h1 className="mb-4">General Death Information</h1>
-      <Button variant="primary" onClick={handleShowModal} disabled={disableAddButton}>
+      <Button variant="primary fw-bold" onClick={handleShowModal} disabled={disableAddButton}>
         Add Death Information
       </Button>
 

@@ -97,11 +97,11 @@ const DirectorLogin = () => {
                 <form action="#!" onSubmit={handleLoginSubmit}>
                   <div className="row gy-3 gy-md-4 overflow-hidden">
                     <div className="col-12">
-                      <label htmlFor="username" className="form-label">Username <span className="text-danger">*</span></label>
+                      <label htmlFor="username" className="form-label fw-bold">Username <span className="text-danger">*</span></label>
                       <input type="text" className="form-control" name="username" id="username" placeholder="Username" value={username} onChange={handleUsernameChange} required />
                     </div>
                     <div className="col-12">
-                      <label htmlFor="password" className="form-label">Password <span className="text-danger">*</span></label>
+                      <label htmlFor="password" className="form-label fw-bold">Password <span className="text-danger">*</span></label>
                       <input type="password" className="form-control" name="password" id="password" placeholder='Password' value={password} onChange={handlePasswordChange} required />
                     </div>
                     <div className="col-12">
@@ -114,7 +114,7 @@ const DirectorLogin = () => {
                     </div>
                     <div className="col-12">
                       <div className="d-grid">
-                        <button className="btn bsb-btn-xl btn-primary" type="submit">Log in now</button>
+                        <button className="btn bsb-btn-xl btn-primary fw-bold" type="submit">Log in now</button>
                       </div>
                     </div>
                   </div>
