@@ -31,25 +31,26 @@ const HandlerCredentialsTable = () => {
   };
 
   // Function to edit an existing credential
-  const editCredential = async (id, editedUsername, editedPassword, editedRegistrationNumber, editedDeputyVetName, editedDeputyRank) => {
+  const editCredential = async (id,editedRegistrationNumber, editedUsername, editedPassword,  editedDeputyVetName, editedDeputyRank) => {
     if (!id || id == '' || !editedUsername || editedUsername == '' || !editedPassword || editedPassword == '' || !editedRegistrationNumber || editedRegistrationNumber == '' || !editedDeputyVetName || editedDeputyVetName == '' || !editedDeputyRank || editedDeputyRank == '') {
       alert('Add all the information');
       return;
     }
     const formData = {
       "id": id,
+      "registrationNumber":editedRegistrationNumber,
       "username": editedUsername,
       "password": editedPassword,
-      "deputyVetName": editedRegistrationNumber,
-      "registrationNumber": editedDeputyVetName,
+      "deputyVetName":editedDeputyVetName ,
+      
       "rank": editedDeputyRank,
     };
     try {
       const response = await axios.post('/updateUser', formData);
 
     } catch (error) {
-      console.error('Error update OIC:', error);
-      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+      console.error('Error update user:', error);
+      alert('An error occurred while update User. Please try again later.'); // Display user-friendly message
     }
     const updatedCredentials = credentials.map(item => {
       if (item.id === id) {
@@ -80,8 +81,8 @@ const HandlerCredentialsTable = () => {
       const response = await axios.post('/removeUser', formData);
 
     } catch (error) {
-      console.error('Error removing Veterinary :', error);
-      alert('An error occurred while removing Veterinary . Please try again later.'); // Display user-friendly message
+      console.error('Error removing User :', error);
+      alert('An error occurred while removing User. Please try again later.'); // Display user-friendly message
     }
     const updatedCredentials = credentials.filter(item => item.id !== id);
     setCredentials(updatedCredentials);
@@ -118,18 +119,18 @@ const HandlerCredentialsTable = () => {
 
       // Check if registration was successful
       if (response.status === 200 && response.data) {
-        console.log('Veterinary registered successfully:', response.data);
+        console.log('Userregistered successfully:', response.data);
         // Redirect to the login page upon successful registration
         addCredential(response.data.insertId, formData);
       } else {
         // Handle unsuccessful registration
-        console.error('Error registering Veterinary:', response.data.message);
-        alert('Failed to register veterinary . Please try again.'); // Display user-friendly message
+        console.error('Error registering User:', response.data.message);
+        alert('Failed to register User. Please try again.'); // Display user-friendly message
       }
     } catch (error) {
       // Handle network errors or other exceptions
-      console.error('Error registering Veterinary:', error);
-      alert('An error occurred while registering Veterinary. Please try again later.'); // Display user-friendly message
+      console.error('Error registering User:', error);
+      alert('An error occurred while registering User. Please try again later.'); // Display user-friendly message
     }
     setNewUsername('');
     setNewPassword('');
@@ -156,7 +157,7 @@ const HandlerCredentialsTable = () => {
     fetchData(); // Invoke the async function immediately
   }, []);
 
-  const rankOptions = ['Constable', 'Sergeant', 'SI']; // Add your rank options here
+  const rankOptions = ['Constable', 'Sergeant', 'SI'];
 
   return (
     
@@ -243,19 +244,7 @@ const HandlerCredentialsTable = () => {
                 ) : (
                   '********'
                 )}
-                {/* Toggle password visibility */}
-                {/* <Button
-                  variant="outline-secondary"
-                  className="ms-2"
-                  onClick={() => setPasswordVisible((prevState) => !prevState)}
-                > */}
-                {
-                  // passwordVisible ?
-                  // <FaEyeSlash />
-                  // :
-                  // <FaEye />
-                }
-                {/* </Button> */}
+                
               </td>
               <td>
                 {editableId === credential.id ? (

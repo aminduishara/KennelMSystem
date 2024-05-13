@@ -59,8 +59,8 @@ const AddHealthInfo = () => {
 
   return (
     <div className="container">
-      <h1 className="mb-4">Health Information</h1>
-      <Button variant="primary" onClick={handleShowModal}>
+      <h1 className="mb-4 text-center fw-bold">Health Information</h1>
+      <Button variant="primary fw-bold" onClick={handleShowModal}>
         Add Health Information
       </Button>
 

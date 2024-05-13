@@ -51,7 +51,7 @@ const DeputyVetSearchDogs = () => {
     }, [])
 
     return (
-        <div className="container">
+        <div className="container" style={{width:'700px'}} >
             <h2 className="mt-3 mb-4 text-center fw-bold">Registered Dogs List</h2>
             <div>
                 {dogAccounts.length === 0 ? (
@@ -62,7 +62,7 @@ const DeputyVetSearchDogs = () => {
                             <ListGroup.Item
                                 key={account.regNo}
                                 onClick={() => handleDogAccountClick(account.regNo)}
-                                className={`d-flex align-items-center  ${index % 2 === 0 ? 'bg-info' : 'bg-success'}`}
+                                className={`d-flex align-items-center  ${index % 2 === 0 ? 'bg-info' : 'bg-info'}`}
                                 style={{ 'cursor': 'pointer' }}
                             >
                                 <img
@@ -86,3 +86,20 @@ const DeputyVetSearchDogs = () => {
 };
 
 export default DeputyVetSearchDogs;
+
+//search bar
+
+{/* <Form className="mb-3">
+                <div className="input-group mb-3">
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by name or registration number"
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                    <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={handleSearchClick}>
+                        <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                </div>
+            </Form> */}
