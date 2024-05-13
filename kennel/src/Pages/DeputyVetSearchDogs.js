@@ -52,7 +52,7 @@ const DeputyVetSearchDogs = () => {
 
     return (
         <div className="container">
-            <h2 className="mt-3 mb-4">Dogs List</h2>
+            <h2 className="mt-3 mb-4 text-center fw-bold">Registered Dogs List</h2>
             {/* <Form className="mb-3">
                 <div className="input-group mb-3">
                     <input
@@ -67,11 +67,11 @@ const DeputyVetSearchDogs = () => {
                     </button>
                 </div>
             </Form> */}
-            <div>
+            <div  style={{background:'red'}}>
                 {dogAccounts.length === 0 ? (
                     <p>No dog accounts were found.</p>
                 ) : (
-                    <ListGroup>
+                    <ListGroup >
                         {dogAccounts.map(account => (
                             <ListGroup.Item key={account.regNo} onClick={() => handleDogAccountClick(account.regNo)} style={{ "display": 'flex', 'gap': '25px', 'cursor': 'pointer' }}>
                                 <img src={process.env.REACT_APP_API_URL + "/" + account.imagePath} alt={account.name} className="mr-3" style={{ width: '100px', height: '100px' }} />

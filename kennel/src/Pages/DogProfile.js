@@ -70,7 +70,7 @@ const DogProfile = () => {
                 setSelectedSickType(response.data[0].healthStatus);
             } catch (error) {
                 console.error('Error retrieving Users:', error);
-                alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+                alert('First time login.Before continue, Create an account for your dog'); // Display user-friendly message
             }
         };
 
@@ -202,7 +202,7 @@ const DogProfile = () => {
                             Add Training Information
                         </button>
                         {dogData.gender === 'female' && (
-                            <button type="button" className="btn btn-outline-primary btn-lg w-100" onClick={handleAddBreedingInfo}>
+                            <button type="button" className="btn btn-outline-primary fw-bold btn-lg w-100" onClick={handleAddBreedingInfo}>
                                 Add Breeding Information
                             </button>
                         )}
