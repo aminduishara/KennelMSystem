@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import '../App.css';
 
 const DailyReport = ({ reportData }) => {
     //define previous day and current date 
@@ -164,7 +165,7 @@ const DailyReport = ({ reportData }) => {
         <p>Kandy Kennels Devision,</p>
         <p>Asgiriya</p>
       </div>
-      <div className="d-flex justify-content-end mt-3 ">
+      <div className="d-flex justify-content-end mt-3 hide-on-print ">
             <button className="btn btn-lg btn-primary fw-bold d-flex justify-content-center align-items-center" style={{ width: "100px", height: "40px",marginBottom:'30px' }}  onClick={() => window.print()}>Print</button>
       </div>
     </div>

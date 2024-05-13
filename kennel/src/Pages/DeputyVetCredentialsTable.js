@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Dropdown } from 'react-bootstrap';
 import Footer from '../Components/Footer';
 import axios from './../axiosConfig';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 const DeputyVetCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
