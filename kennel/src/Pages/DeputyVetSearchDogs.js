@@ -80,7 +80,7 @@ const DeputyVetSearchDogs = () => {
                     </ListGroup>
                 )}
             </div>
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 };

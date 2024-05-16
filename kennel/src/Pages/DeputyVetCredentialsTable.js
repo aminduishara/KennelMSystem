@@ -6,7 +6,7 @@ import axios from './../axiosConfig';
 
 const DeputyVetCredentialsTable = () => {
   const [credentials, setCredentials] = useState([]);
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible] = useState(false);
   const [editableId, setEditableId] = useState(null);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -49,8 +49,8 @@ const DeputyVetCredentialsTable = () => {
       const response = await axios.post('/updateUser', formData);
 
     } catch (error) {
-      console.error('Error update OIC:', error);
-      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+      console.error('Error update User:', error);
+      alert('An error occurred while update User. Please try again later.'); // Display user-friendly message
     }
     const updatedCredentials = credentials.map(item => {
       if (item.id === id) {
@@ -90,11 +90,14 @@ const DeputyVetCredentialsTable = () => {
 
   const handleEdit = (credential) => {
     setEditableId(credential.id);
-    setEditedUsername(credential.username);
-    setEditedPassword(credential.password);
     setEditedRegistrationNumber(credential.registrationNumber);
     setEditedDeputyVetName(credential.deputyVetName);
     setEditedDeputyRank(credential.rank);
+    setEditedUsername(credential.username);
+    setEditedPassword(credential.password);
+   
+   
+    
   };
 
   const handleSave = (id) => {
