@@ -29,7 +29,7 @@ const OicDashboard = () => {
         </div>
         <div className="mb-3">
           <Button variant="primary fw-bold" size="lg" style={{ width: "320px", height: "100px" }} onClick={handleSummary}>
-            Generate Summary
+          Summary Dashboard
           </Button>
         </div>
       </div>
