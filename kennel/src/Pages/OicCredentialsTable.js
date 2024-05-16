@@ -49,8 +49,8 @@ const OicCredentialsTable = () => {
       const response = await axios.post('/updateUser', formData);
 
     } catch (error) {
-      console.error('Error update OIC:', error);
-      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+      console.error('Error update User:', error);
+      alert('An error occurred while update User. Please try again later.'); // Display user-friendly message
     }
     const updatedCredentials = credentials.map(item => {
       if (item.id === id) {
