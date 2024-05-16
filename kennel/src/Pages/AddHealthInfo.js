@@ -89,56 +89,55 @@ const AddHealthInfo = () => {
               />
             </Form.Group>
             <Form.Group controlId="formLongtermSicknesses">
-                      <Form.Label>Longterm Sicknesses:</Form.Label>
-                      <Form.Control
+              <Form.Label>Longterm Sicknesses:</Form.Label>
+              <Form.Control
+                type="text"
+                name="longtermSicknesses"
+                value={formData.longtermSicknesses}
+                onChange={(e) => {
+                  const inputText = e.target.value;
+                  if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
+                    setFormData({ ...formData, longtermSicknesses: inputText });
+                  } else {
+                    alert("Please enter text only.");
+                  }
+                }}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formCurrentSickness">
+              <Form.Label>Current Sickness:</Form.Label>
+                  <Form.Control
                         type="text"
-                        name="longtermSicknesses"
-                        value={formData.longtermSicknesses}
+                        name="currentSickness"
+                        value={formData.currentSickness}
                         onChange={(e) => {
                           const inputText = e.target.value;
                           if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
-                            setFormData({ ...formData, longtermSicknesses: inputText });
+                            setFormData({ ...formData, currentSickness: inputText });
                           } else {
-                            alert("Please enter text only.");
+                            alert("Please enter text only. ");
                           }
                         }}
-                      />
-                    </Form.Group>
+                />
+            </Form.Group>
 
-
-            <Form.Group controlId="formCurrentSickness">
-                        <Form.Label>Current Sickness:</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="currentSickness"
-                          value={formData.currentSickness}
-                          onChange={(e) => {
-                            const inputText = e.target.value;
-                            if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
-                              setFormData({ ...formData, currentSickness: inputText });
-                            } else {
-                              alert("Please enter text only. ");
-                            }
-                          }}
-                        />
-                      </Form.Group>
-
-                      <Form.Group controlId="formMedicineGiven">
-                          <Form.Label>Medicine Given:</Form.Label>
-                          <Form.Control
-                            type="text"
-                            name="medicineGiven"
-                            value={formData.medicineGiven}
-                            onChange={(e) => {
-                              const inputText = e.target.value;
-                              if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
-                                setFormData({ ...formData, medicineGiven: inputText });
-                              } else {
-                                alert("Please enter text only.");
-                              }
-                            }}
-                          />
-                        </Form.Group>
+            <Form.Group controlId="formMedicineGiven">
+              <Form.Label>Medicine Given:</Form.Label>
+              <Form.Control
+                type="text"
+                name="medicineGiven"
+                value={formData.medicineGiven}
+                onChange={(e) => {
+                  const inputText = e.target.value;
+                  if (/^[a-zA-Z][a-zA-Z0-9\s]*$/.test(inputText)) {
+                    setFormData({ ...formData, medicineGiven: inputText });
+                  } else {
+                    alert("Please enter text only.");
+                  }
+                }}
+              />
+            </Form.Group>
 
             <Form.Group controlId="formMedicineRecommendations">
               <Form.Label>Medicine Recommendations:</Form.Label>
