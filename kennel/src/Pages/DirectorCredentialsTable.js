@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import {  Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import { useUser } from './../UserContext';
@@ -29,8 +29,8 @@ const DirectorCredentialsTable = () => {
       const response = await axios.post('/updateUser', formData);
       navigate('/Pages/DirectorCredentialsManageButtons');
     } catch (error) {
-      console.error('Error update OIC:', error);
-      alert('An error occurred while update OIC. Please try again later.'); // Display user-friendly message
+      console.error('Error update User:', error);
+      alert('An error occurred while update User. Please try again later.'); // Display user-friendly message
     }
   };
 

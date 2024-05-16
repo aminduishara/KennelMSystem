@@ -11,6 +11,7 @@ const AddHealthInfo = () => {
     medicineRecommendations: [],
     nextClinicDate: '',
     notes: '',
+    medicineGiven: '',
   });
   const [healthList, setHealthList] = useState([]);
   const [editableIndex, setEditableIndex] = useState(null);
@@ -45,6 +46,7 @@ const AddHealthInfo = () => {
       medicineRecommendations: [],
       nextClinicDate: '',
       notes: '',
+      medicineGiven: '',
     });
     handleCloseModal();
   };
@@ -81,6 +83,10 @@ const AddHealthInfo = () => {
             <Form.Group controlId="formCurrentSickness">
               <Form.Label>Current Sickness:</Form.Label>
               <Form.Control type="text" name="currentSickness" value={formData.currentSickness} onChange={(e) => setFormData({ ...formData, currentSickness: e.target.value })} />
+            </Form.Group>
+            <Form.Group controlId="formMedicineGiven">
+              <Form.Label>Medicine Given:</Form.Label>
+              <Form.Control type="text" name="medicineGiven" value={formData.medicineGiven} onChange={(e) => setFormData({ ...formData, medicineGiven: e.target.value })} />
             </Form.Group>
             <Form.Group controlId="formMedicineRecommendations">
               <Form.Label>Medicine Recommendations:</Form.Label>
@@ -139,6 +145,7 @@ const AddHealthInfo = () => {
               <th>Date</th>
               <th>Longterm Sicknesses</th>
               <th>Current Sickness</th>
+              <th>Medicine Given</th>
               <th>Medicine Recommendations</th>
               <th>Next Clinic Date</th>
               <th>Notes</th>
@@ -154,6 +161,8 @@ const AddHealthInfo = () => {
                  onChange={(e) => handleChange(e, index)} /> : health.longtermSicknesses}</td>
                 <td>{editableIndex === index ? <Form.Control type="text" value={health.currentSickness} name="currentSickness" 
                 onChange={(e) => handleChange(e, index)} /> : health.currentSickness}</td>
+                <td>{editableIndex === index ? <Form.Control type="text" value={health.medicineGiven} name="medicineGiven" 
+                onChange={(e) => handleChange(e, index)} /> : health.medicineGiven}</td>
                 <td>
                   {editableIndex === index ? (
                     <div>
@@ -206,4 +215,3 @@ const AddHealthInfo = () => {
     };
     
     export default AddHealthInfo;
-    

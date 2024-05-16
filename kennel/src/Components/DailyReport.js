@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import '../App.css';
 
 const DailyReport = ({ reportData }) => {
     //define previous day and current date 
@@ -72,7 +73,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4 className='text-center'>Helping for Criminal Cases</h4>
+      <h4 className='text-center'>Helping For Criminal Cases</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -99,7 +100,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4 className='text-center'>Helping for Drug Cases</h4>
+      <h4 className='text-center'>Helping For Drug Cases</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -126,7 +127,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4 className='text-center'>Helping for Explosives</h4>
+      <h4 className='text-center'>Helping For Explosives</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -163,6 +164,9 @@ const DailyReport = ({ reportData }) => {
         <p>Director,</p>
         <p>Kandy Kennels Devision,</p>
         <p>Asgiriya</p>
+      </div>
+      <div className="d-flex justify-content-end mt-3 hide-on-print ">
+            <button className="btn btn-lg btn-primary fw-bold d-flex justify-content-center align-items-center" style={{ width: "100px", height: "40px",marginBottom:'30px' }}  onClick={() => window.print()}>Print</button>
       </div>
     </div>
   );

@@ -116,3 +116,9 @@ body {
     background-color: #ADD8E6;
     min-height: 100vh;
   }
+  /*hide-on-print*/
+  @media print {
+    .hide-on-print {
+      display: none !important;
+    }
+  }

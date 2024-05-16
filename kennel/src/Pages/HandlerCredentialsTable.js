@@ -182,6 +182,7 @@ const HandlerCredentialsTable = () => {
                 {editableId === credential.id ? (
                   <Form.Control
                     type="text"
+                    placeholder='cc'
                     value={editedRegistrationNumber}
                     onChange={(e) => setEditedRegistrationNumber(e.target.value)}
                   />
