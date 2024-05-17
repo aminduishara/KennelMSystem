@@ -5,7 +5,7 @@ const router = express.Router();
 const handlerController = require('../controllers/HandlerCredentialsController');
 const { handleRegisterDirector, handleLoginDirector, handleRemoveUser, handleUpdateUser, handleGetUser, handleGetSingleUser } = require('../controllers/DirectorController');
 const { handleGetDogInfo, handleRegisterDogInfo, handleUpdateDogInfo, handleAddDuty, handleGetDuty, handleAddTraining, handleGetTraining, handleAddBreeding, handleGetBreeding } = require('../controllers/HandlerController');
-const { handleGetDogs, handleGetDogsDetails } = require('../controllers/HandleVeterinaryController');
+const { handleGetDogs, handleGetDogsDetails, handleAddHealth, handleGetHealth, handleGetVaccine, handleAddVaccine, handleGetGeneral, handleAddGeneral } = require('../controllers/HandleVeterinaryController');
 //importing the handlerDetailsAutoFillingController
 const handlerDetailsAutoFillingController = require('../controllers/HandlerDetailsAutoFillingController');
 
@@ -30,6 +30,12 @@ router.get('/getBreeding/?', handleGetBreeding);
 //Veterinary dashboard
 router.get('/getDogs', handleGetDogs);
 router.get('/getDogInfo2/?', handleGetDogsDetails);
+router.post('/addHealth', handleAddHealth);
+router.get('/getHealth/?', handleGetHealth);
+router.get('/getVaccine/?', handleGetVaccine);
+router.post('/addVaccine', handleAddVaccine);
+router.get('/getGeneral/?', handleGetGeneral);
+router.post('/addGeneral', handleAddGeneral);
 
 // Route to login a director
 router.post('/login', handleLoginDirector);

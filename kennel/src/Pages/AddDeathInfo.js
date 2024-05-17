@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Table } from 'react-bootstrap';
 import Footer from '../Components/Footer';
+import axios from './../axiosConfig';
+import { useLocation } from 'react-router-dom';
+
 const AddDeathInfo = () => {
+  const location = useLocation();
+  const regNo = location.state.regNo;
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
     date: '',
@@ -24,18 +29,36 @@ const AddDeathInfo = () => {
     setDeathList(updatedDeathList);
   };
 
-  const handleAddDeathInfo = () => {
-    const newDeath = { ...formData };
-    setDeathList([...deathList, newDeath]);
-    setFormData({
-      date: '',
-      ageYears: '',
-      ageMonths: '',
-      generalReason: '',
-      notes: '',
-    });
-    setDisableAddButton(true);
-    handleCloseModal();
+  const handleAddDeathInfo = async () => {
+    if (!formData || !formData.date || !formData.ageYears || !formData.ageMonths || !formData.generalReason || !formData.notes) {
+      alert('Please fill all the data');
+      return;
+    }
+    const newGeneral = { ...formData, regNo };
+    try {
+      const response = await axios.post('/addGeneral', newGeneral);
+
+      if (response.status === 200 && response.data) {
+
+        setDeathList([...deathList, newGeneral]);
+        setFormData({
+          date: '',
+          ageYears: '',
+          ageMonths: '',
+          generalReason: '',
+          notes: '',
+        });
+        setDisableAddButton(true);
+        handleCloseModal();
+      } else {
+        console.error('Error adding breeding:', response.data.message);
+        alert('Failed to adding breeding. Please try again.'); // Display user-friendly message
+      }
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error adding breeding:', error);
+      alert('An error occurred while adding breeding. Please try again later.'); // Display user-friendly message
+    }
   };
 
   const handleEditRow = (index) => {
@@ -46,12 +69,49 @@ const AddDeathInfo = () => {
     setEditableIndex(null);
   };
 
+  useState(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('/getGeneral?reg=' + regNo);
+        if (response.data) {
+          const modifiedData = response.data.map(item => ({
+            ...item,
+            date: formatDate(item.date),
+            ageYears: item.age_years,
+            ageMonths: item.age_months,
+            generalReason: item.reason,
+            notes: item.notes
+          }));
+          setDeathList(modifiedData);
+        }
+      } catch (error) {
+        console.error('Error retrieving Users:', error);
+        alert('An error occurred while retrieving Users. Please try again later.'); // Display user-friendly message
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Format date to 'Y-m-d' (Year-Month-Day) format
+  const formatDate = (date) => {
+    const formattedDate = new Date(date);
+    const year = formattedDate.getFullYear();
+    let month = (1 + formattedDate.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month; // Add leading zero if month is single digit
+    let day = formattedDate.getDate().toString();
+    day = day.length > 1 ? day : '0' + day; // Add leading zero if day is single digit
+    return year + '-' + month + '-' + day;
+  };
+
   return (
     <div className="container">
       <h1 className="mb-4">General Death Information</h1>
-      <Button variant="primary" onClick={handleShowModal} disabled={disableAddButton}>
-        Add Death Information
-      </Button>
+      {deathList.length <= 0 &&
+        <Button variant="primary" onClick={handleShowModal} disabled={disableAddButton}>
+          Add Death Information
+        </Button>
+      }
 
       <Modal show={showModal} onHide={handleCloseModal} dialogClassName="modal-dialog-scrollable">
         <Modal.Header closeButton>
@@ -92,7 +152,7 @@ const AddDeathInfo = () => {
       </Modal>
 
       <div className="mt-4">
-        
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -131,7 +191,7 @@ const AddDeathInfo = () => {
           </tbody>
         </Table>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };

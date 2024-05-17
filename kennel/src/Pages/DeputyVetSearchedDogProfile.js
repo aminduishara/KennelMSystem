@@ -14,15 +14,15 @@ const DeputyVetSearchedDogProfile = () => {
     const [dogData, setDogData] = useState();
 
     const handleAddHealthInfo = () => {
-        navigate('/Pages/AddHealthInfo');
+        navigate('/Pages/AddHealthInfo', { state: { regNo: dogData.regNo } });
     };
 
     const handleAddVaccinationInfo = () => {
-        navigate('/Pages/AddVaccinationInfo');
+        navigate('/Pages/AddVaccinationInfo', { state: { regNo: dogData.regNo } });
     };
 
     const handleAddDeathInfo = () => {
-        navigate('/Pages/AddDeathInfo');
+        navigate('/Pages/AddDeathInfo', { state: { regNo: dogData.regNo } });
     }
 
     useEffect(() => {
