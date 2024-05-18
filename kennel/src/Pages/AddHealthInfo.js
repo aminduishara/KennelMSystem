@@ -10,12 +10,13 @@ const AddHealthInfo = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({
-    date: '',
-    longtermSicknesses: '',
-    currentSickness: '',
+    date: "",
+    longtermSicknesses: "",
+    currentSickness: "",
     medicineRecommendations: [],
-    nextClinicDate: '',
-    notes: '',
+    nextClinicDate: "",
+    notes: "",
+    medicineGiven: "",
   });
   const [healthList, setHealthList] = useState([]);
   const [editableIndex, setEditableIndex] = useState(null);
@@ -26,13 +27,13 @@ const AddHealthInfo = () => {
   const handleChange = (e, index) => {
     const { name, value, type, checked } = e.target;
     const updatedHealthList = [...healthList];
-    if (type === 'checkbox') {
+    if (type === "checkbox") {
       if (checked) {
         updatedHealthList[index].medicineRecommendations.push(value);
       } else {
-        updatedHealthList[index].medicineRecommendations = updatedHealthList[index].medicineRecommendations.filter(
-          (item) => item !== value
-        );
+        updatedHealthList[index].medicineRecommendations = updatedHealthList[
+          index
+        ].medicineRecommendations.filter((item) => item !== value);
       }
     } else {
       updatedHealthList[index][name] = value;
@@ -126,12 +127,16 @@ const AddHealthInfo = () => {
 
   return (
     <div className="container">
-      <h1 className="mb-4">Health Information</h1>
-      <Button variant="primary" onClick={handleShowModal}>
+      <h1 className="mb-4 text-center fw-bold">Health Information</h1>
+      <Button variant="primary fw-bold" onClick={handleShowModal}>
         Add Health Information
       </Button>
 
-      <Modal show={showModal} onHide={handleCloseModal} dialogClassName="modal-dialog-scrollable">
+      <Modal
+        show={showModal}
+        onHide={handleCloseModal}
+        dialogClassName="modal-dialog-scrollable"
+      >
         <Modal.Header closeButton>
           <Modal.Title>Add Health Information</Modal.Title>
         </Modal.Header>
@@ -139,16 +144,67 @@ const AddHealthInfo = () => {
           <Form>
             <Form.Group controlId="formDate">
               <Form.Label>Date:</Form.Label>
-              <Form.Control type="date" name="date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
+              <Form.Control
+                type="date"
+                name="date"
+                required
+                value={formData.date}
+                onChange={(e) =>
+                  setFormData({ ...formData, date: e.target.value })
+                }
+              />
             </Form.Group>
             <Form.Group controlId="formLongtermSicknesses">
               <Form.Label>Longterm Sicknesses:</Form.Label>
-              <Form.Control type="text" name="longtermSicknesses" value={formData.longtermSicknesses} onChange={(e) => setFormData({ ...formData, longtermSicknesses: e.target.value })} />
+              <Form.Control
+                type="text"
+                name="longtermSicknesses"
+                value={formData.longtermSicknesses}
+                onChange={(e) => {
+                  const inputText = e.target.value;
+                  if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
+                    setFormData({ ...formData, longtermSicknesses: inputText });
+                  } else {
+                    alert("Please enter text only.");
+                  }
+                }}
+              />
             </Form.Group>
+
             <Form.Group controlId="formCurrentSickness">
               <Form.Label>Current Sickness:</Form.Label>
-              <Form.Control type="text" name="currentSickness" value={formData.currentSickness} onChange={(e) => setFormData({ ...formData, currentSickness: e.target.value })} />
+                  <Form.Control
+                        type="text"
+                        name="currentSickness"
+                        value={formData.currentSickness}
+                        onChange={(e) => {
+                          const inputText = e.target.value;
+                          if (/^[a-zA-Z][a-zA-Z\s]*$/.test(inputText)) {
+                            setFormData({ ...formData, currentSickness: inputText });
+                          } else {
+                            alert("Please enter text only. ");
+                          }
+                        }}
+                />
             </Form.Group>
+
+            <Form.Group controlId="formMedicineGiven">
+              <Form.Label>Medicine Given:</Form.Label>
+              <Form.Control
+                type="text"
+                name="medicineGiven"
+                value={formData.medicineGiven}
+                onChange={(e) => {
+                  const inputText = e.target.value;
+                  if (/^[a-zA-Z][a-zA-Z0-9\s]*$/.test(inputText)) {
+                    setFormData({ ...formData, medicineGiven: inputText });
+                  } else {
+                    alert("Please enter text only.");
+                  }
+                }}
+              />
+            </Form.Group>
+
             <Form.Group controlId="formMedicineRecommendations">
               <Form.Label>Medicine Recommendations:</Form.Label>
               <div>
@@ -180,11 +236,26 @@ const AddHealthInfo = () => {
             </Form.Group>
             <Form.Group controlId="formNextClinicDate">
               <Form.Label>Next Clinic Date:</Form.Label>
-              <Form.Control type="date" name="nextClinicDate" value={formData.nextClinicDate} onChange={(e) => setFormData({ ...formData, nextClinicDate: e.target.value })} />
+              <Form.Control
+                type="date"
+                name="nextClinicDate"
+                value={formData.nextClinicDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, nextClinicDate: e.target.value })
+                }
+              />
             </Form.Group>
             <Form.Group controlId="formNotes">
               <Form.Label>Notes:</Form.Label>
-              <Form.Control as="textarea" rows={3} name="notes" value={formData.notes} onChange={(e) => setFormData({ ...formData, notes: e.target.value })} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                name="notes"
+                value={formData.notes}
+                onChange={(e) =>
+                  setFormData({ ...formData, notes: e.target.value })
+                }
+              />
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -206,6 +277,7 @@ const AddHealthInfo = () => {
               <th>Date</th>
               <th>Longterm Sicknesses</th>
               <th>Current Sickness</th>
+              <th>Medicine Given</th>
               <th>Medicine Recommendations</th>
               <th>Next Clinic Date</th>
               <th>Notes</th>

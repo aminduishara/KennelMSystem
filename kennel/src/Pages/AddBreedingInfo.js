@@ -192,6 +192,7 @@ const AddBreedingInfo = () => {
         </Table>
       </div>
       <Footer />
+      
     </div>
   );
 };

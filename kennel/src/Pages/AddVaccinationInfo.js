@@ -102,8 +102,8 @@ const AddVaccinationInfo = () => {
 
   return (
     <div className="container">
-      <h1 className="mb-4">Vaccination Information</h1>
-      <Button variant="primary" onClick={handleShowModal}>
+      <h1 className="mb-4 fw-bold text-center">Vaccination Information</h1>
+      <Button variant="primary fw-bold" onClick={handleShowModal}>
         Add Vaccination Information
       </Button>
 

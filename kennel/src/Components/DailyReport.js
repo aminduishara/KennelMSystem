@@ -1,16 +1,23 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import '../App.css';
 
 const DailyReport = ({ reportData }) => {
+    //define previous day and current date 
+    const currentDate = new Date();
+    const previousDate = new Date(currentDate);
+    previousDate.setDate(previousDate.getDate() - 1);
+    const formattedPreviousDate = previousDate.toLocaleDateString();
+    const formattedCurrentDate = currentDate.toLocaleDateString();
    return (
     <div className="daily-report">
       <p>Index:DIR/PO/PW</p>
-      <p>Director</p>
+      
       <p>Kandy Kennels Devision</p>
         <p>Asgiriya</p>
-      <p>{new Date().toLocaleDateString()} [ 6.00 am to 6.00 am within 24 hours]</p> {/* Display current date */}
+      <p className='fw-bold'> From [{formattedPreviousDate}] 6.00 A.M to [{formattedCurrentDate}] 6.00 A.M </p> 
 
-      <h4>Sick Dog Information</h4>
+      <h4 className='text-center'>Sick Dog Information</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -40,7 +47,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4>Death Information</h4>
+      <h4 className='text-center' >Death Information</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -66,7 +73,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4>Helping for Criminal Cases</h4>
+      <h4 className='text-center'>Helping For Criminal Cases</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -93,7 +100,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4>Helping for Drug Cases</h4>
+      <h4 className='text-center'>Helping For Drug Cases</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -120,7 +127,7 @@ const DailyReport = ({ reportData }) => {
         </tbody>
       </Table>
 
-      <h4>Helping for Explosives</h4>
+      <h4 className='text-center'>Helping For Explosives</h4>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -151,12 +158,15 @@ const DailyReport = ({ reportData }) => {
       
       <div className='details'>
       <p>Checked by</p>
-        <p>L.K Wijayabandara</p><br/>
+        <p>L.K Wijayabandara</p><br/> {/* Logged director name here*/}
         <br/>
         <br/>
         <p>Director,</p>
         <p>Kandy Kennels Devision,</p>
         <p>Asgiriya</p>
+      </div>
+      <div className="d-flex justify-content-end mt-3 hide-on-print ">
+            <button className="btn btn-lg btn-primary fw-bold d-flex justify-content-center align-items-center" style={{ width: "100px", height: "40px",marginBottom:'30px' }}  onClick={() => window.print()}>Print</button>
       </div>
     </div>
   );
