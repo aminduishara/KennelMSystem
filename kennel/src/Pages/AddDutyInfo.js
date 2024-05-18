@@ -120,10 +120,26 @@ const AddDutyInfo = () => {
               <Form.Label>Date:</Form.Label>
               <Form.Control type="date" name="date" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} />
             </Form.Group>
+            
             <Form.Group controlId="formDutyPlace">
-              <Form.Label>Duty Place:</Form.Label>
-              <Form.Control type="text" name="dutyPlace" value={formData.dutyPlace} onChange={(e) => setFormData({ ...formData, dutyPlace: e.target.value })} />
+                <Form.Label>Duty Place:</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="dutyPlace"
+                  value={formData.dutyPlace}
+                  onChange={(e) => {
+                    const inputText = e.target.value;
+                    if (/^[a-zA-Z\s]*$/.test(inputText)) {
+                      setFormData({ ...formData, dutyPlace: inputText });
+                    } else {
+                      alert("Please enter text only without numbers or special characters.");
+                    }
+                  }}
+                />
             </Form.Group>
+
+
+
             <Form.Group controlId="formTime"> {/* Manually enter time */}
               <Form.Label>Time:</Form.Label>
               <Form.Control type="time" name="time" value={formData.time} onChange={(e) => setFormData({ ...formData, time: e.target.value })} />
