@@ -1,4 +1,4 @@
-const { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler, addBreedingHandler, breedingInfoHandler } = require('../models/HandlerModel');
+const { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler, addBreedingHandler, breedingInfoHandler, dogInfoHandlerAll } = require('../models/HandlerModel');
 const multer = require('multer');
 
 // Multer configuration for file uploads
@@ -123,4 +123,14 @@ function handleGetBreeding(req, res) {
     });
 }
 
-module.exports = { handleGetDogInfo, handleRegisterDogInfo, handleUpdateDogInfo, handleAddDuty, handleGetDuty, handleAddTraining, handleGetTraining, handleAddBreeding, handleGetBreeding };
+function handleGetDutyAll(req, res) {
+    const { pet } = req.query;
+    dogInfoHandlerAll(pet, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        return res.status(result != null ? 200 : 401).json(result);
+    });
+}
+
+module.exports = { handleGetDogInfo, handleRegisterDogInfo, handleUpdateDogInfo, handleAddDuty, handleGetDuty, handleAddTraining, handleGetTraining, handleAddBreeding, handleGetBreeding, handleGetDutyAll };

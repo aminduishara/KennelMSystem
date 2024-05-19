@@ -1,8 +1,11 @@
 const pool = require('../db');
 
-function getDogHandler(reg, callback) {
-    const sql = "SELECT * FROM policedog";
-    const values = [reg];
+function getDogHandler(filter, callback) {
+    let sql = "SELECT * FROM policedog INNER JOIN user ON user.userId = policedog.handlerRegNo";
+    if (filter != '' && filter != null) {
+        sql += " WHERE healthStatus = ?"
+    }
+    const values = [filter];
 
     pool.query(sql, values, (err, data) => {
         if (err) {
@@ -116,4 +119,18 @@ function addGeneralHandler(date, ageYears, ageMonths, generalReason, notes, regN
     });
 }
 
-module.exports = { getDogHandler, dogInfoHandler, addHealthHandler, healthInfoHandler, vaccineInfoHandler, addVaccineHandler, generalInfoHandler, addGeneralHandler };
+function healthInfoHandlerAll(reg, callback) {
+    const sql = "SELECT * FROM doghealth INNER JOIN policedog ON doghealth.regNo = policedog.regNo INNER JOIN user ON user.userId = policedog.handlerRegNo WHERE doghealth.date >= CURDATE() - INTERVAL 1 DAY AND doghealth.date <= CURDATE();";
+    const values = [reg];
+
+    pool.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return callback(err, null);
+        }
+        console.log('Data retrieved successfully:', data);
+        return callback(null, data);
+    });
+}
+
+module.exports = { getDogHandler, dogInfoHandler, addHealthHandler, healthInfoHandler, vaccineInfoHandler, addVaccineHandler, generalInfoHandler, addGeneralHandler, healthInfoHandlerAll };

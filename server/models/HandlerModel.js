@@ -134,4 +134,18 @@ function breedingInfoHandler(reg, callback) {
     });
 }
 
-module.exports = { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler, addBreedingHandler, breedingInfoHandler };
+function dogInfoHandlerAll(reg, callback) {
+    const sql = "SELECT * FROM dogduty INNER JOIN policedog ON dogduty.regNo = policedog.regNo INNER JOIN user ON user.userId = policedog.handlerRegNo WHERE dogduty.dutyDate >= CURDATE() - INTERVAL 1 DAY AND dogduty.dutyDate <= CURDATE();";
+    const values = [reg];
+
+    pool.query(sql, values, (err, data) => {
+        if (err) {
+            console.error('Error executing SQL query:', err);
+            return callback(err, null);
+        }
+        console.log('Data retrieved successfully:', data);
+        return callback(null, data);
+    });
+}
+
+module.exports = { dogInfoHandler, dogRegisterHandler, dogUpdateHandler, addDutyHandler, dutyInfoHandler, addTrainingHandler, trainingInfoHandler, addBreedingHandler, breedingInfoHandler, dogInfoHandlerAll };

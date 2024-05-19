@@ -1,9 +1,9 @@
-const { getDogHandler, dogInfoHandler, addHealthHandler, healthInfoHandler, vaccineInfoHandler, addVaccineHandler, generalInfoHandler, addGeneralHandler } = require('../models/VeterinaryModel');
+const { getDogHandler, dogInfoHandler, addHealthHandler, healthInfoHandler, vaccineInfoHandler, addVaccineHandler, generalInfoHandler, addGeneralHandler, healthInfoHandlerAll } = require('../models/VeterinaryModel');
 const multer = require('multer');
 
 function handleGetDogs(req, res) {
-    const { reg } = req.query;
-    getDogHandler(reg, (err, result) => {
+    const { filter } = req.query;
+    getDogHandler(filter, (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Internal server error' });
         }
@@ -81,4 +81,14 @@ function handleAddGeneral(req, res) {
     });
 }
 
-module.exports = { handleGetDogs, handleGetDogsDetails, handleAddHealth, handleGetHealth, handleGetVaccine, handleAddVaccine, handleGetGeneral, handleAddGeneral };
+function handleGetHealthAll(req, res) {
+    const { reg } = req.query;
+    healthInfoHandlerAll(reg, (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+        return res.status(result != null ? 200 : 401).json(result);
+    });
+}
+
+module.exports = { handleGetDogs, handleGetDogsDetails, handleAddHealth, handleGetHealth, handleGetVaccine, handleAddVaccine, handleGetGeneral, handleAddGeneral, handleGetHealthAll };
